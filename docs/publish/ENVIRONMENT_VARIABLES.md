@@ -55,6 +55,15 @@ Set to `true` if your application is sitting behind a reverse-proxy (Nginx, Clou
 
 ---
 
+## 📦 Storage Configuration
+
+| Variable | Default | Description |
+| :------- | :------ | :---------- |
+| `STORAGE_PROVIDER` | `local` | `local` for disk storage or `vercel-blob` for cloud storage. |
+| `BLOB_READ_WRITE_TOKEN` | - | (Vercel Blob Only) Required token for API interaction. |
+
+---
+
 ## 🔌 Flags & Integrations
 
 - **`ENABLE_NOTIFICATIONS`**: Set to `false` to silence system-wide UI alerts.

@@ -12,7 +12,7 @@ When moving from local development to production, the architecture shifts from a
 | :--- | :--- | :--- |
 | **Runtime** | Bun / Node.js | Vercel Serverless (Node.js) |
 | **Database** | SQLite (`local.db`) | **PostgreSQL** (Vercel Postgres / Supabase) |
-| **File Storage** | Local Disk | Cloud Storage (S3 / R2 - Optional) |
+| **File Storage** | Local Disk (`public/uploads`) | **Vercel Blob** (Recommended) |
 | **WebSockets** | Integrated Socket.IO | Ably / Pusher (or custom dedicated server) |
 
 > [!IMPORTANT]
@@ -75,7 +75,17 @@ Before pushing to GitHub, ensure your project is clean and production-ready.
 
 ---
 
-## 🔐 Step 5: Environment Variables
+## 📦 Step 5: Configure Storage (Vercel Blob)
+
+1.  **Add Storage**: In your Vercel project dashboard, go to the **"Storage"** tab.
+2.  **Create Blob**: Select **"Blob"** and click **"Create"**.
+3.  **Connect**: Link the Blob storage to your project. This will automatically inject the `BLOB_READ_WRITE_TOKEN`.
+4.  **Set Provider**: Manually add the environment variable `STORAGE_PROVIDER=vercel-blob` to activate the cloud storage service.
+
+
+---
+
+## 🔐 Step 6: Environment Variables
 
 In your Vercel Project Settings, navigate to **"Environment Variables"** and add the following:
 
@@ -84,11 +94,13 @@ In your Vercel Project Settings, navigate to **"Environment Variables"** and add
 | `DATABASE_URL` | (Automatically added by Vercel Postgres) |
 | `AUTH_SECRET` | Run `openssl rand -base64 32` to generate a secure secret. |
 | `BASE_URL` | Your production URL (e.g., `https://my-dashboard.vercel.app`) |
+| `STORAGE_PROVIDER` | `vercel-blob` |
+| `BLOB_READ_WRITE_TOKEN` | (Automatically added by Vercel Blob) |
 | `NEXT_PUBLIC_APP_NAME` | `NEXT-KVC` |
 
 ---
 
-## 🏗️ Step 6: First Deployment & DB Migration
+## 🏗️ Step 7: First Deployment & DB Migration
 
 Vercel will automatically trigger a build when you push to `main`. If this is your first time deploying:
 
