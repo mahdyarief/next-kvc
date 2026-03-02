@@ -24,6 +24,7 @@ export interface DocFile {
   name: string;
   slug: string;
   path: string;
+  category: "reference" | "guide" | "info";
 }
 
 export default async function PublicDocsPage({
@@ -55,37 +56,40 @@ export default async function PublicDocsPage({
     const files = fs.readdirSync(docsDir).filter((file) => file.endsWith(".md"));
 
     // Sort files based on DOC_ORDER
-    const sortedFiles = DOC_ORDER.filter(orderedFile =>
-      files.includes(orderedFile)
-    );
+    const sortedFiles = DOC_ORDER.filter((orderedFile) => files.includes(orderedFile));
 
     // Add any files not in DOC_ORDER at the end
-    const remainingFiles = files.filter(file => !DOC_ORDER.includes(file));
+    const remainingFiles = files.filter((file) => !DOC_ORDER.includes(file));
     const allFiles = [...sortedFiles, ...remainingFiles];
 
     availableFiles = allFiles.map((file) => {
       // Create a pretty name
       let prettyName = file.replace(".md", "").replace(/_/g, " ");
-      // Special case mappings for better UI
-      const nameMap: Record<string, string> = {
-        "README": "Welcome & Index",
-        "ENVIRONMENT VARIABLES": "Environment Setup",
-        "PROJECT DOCUMENTATION": "Project Architecture",
-        "AGENTIC FRAMEWORK": "Agentic Framework",
-        "FEATURE IMPLEMENTATION JOURNEY": "Feature Journey",
-        "DEPLOYMENT GUIDE": "Deployment Guide",
-        "API DOCUMENTATION": "API Specification",
-        "CHANGELOG": "Changelog"
+      let category: "reference" | "guide" | "info" = "reference";
+
+      // Special case mappings for better UI and categorization
+      const nameMap: Record<string, { name: string; category: "reference" | "guide" | "info" }> = {
+        README: { name: "Welcome & Index", category: "reference" },
+        "ENVIRONMENT VARIABLES": { name: "Environment Setup", category: "reference" },
+        "PROJECT DOCUMENTATION": { name: "Project Architecture", category: "reference" },
+        "AGENTIC FRAMEWORK": { name: "Agentic Framework", category: "reference" },
+        "FEATURE IMPLEMENTATION JOURNEY": { name: "Feature Journey", category: "guide" },
+        "DEPLOYMENT GUIDE": { name: "Deployment Guide", category: "guide" },
+        "API DOCUMENTATION": { name: "API Specification", category: "reference" },
+        CHANGELOG: { name: "Changelog", category: "info" },
       };
 
-      if (nameMap[prettyName.toUpperCase()]) {
-        prettyName = nameMap[prettyName.toUpperCase()];
+      const mapping = nameMap[prettyName.toUpperCase()];
+      if (mapping) {
+        prettyName = mapping.name;
+        category = mapping.category;
       }
 
       return {
         name: prettyName,
         slug: file.replace(".md", "").toLowerCase().replace(/_/g, "-"),
         path: file,
+        category,
       };
     });
   } catch (err) {

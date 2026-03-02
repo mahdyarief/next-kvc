@@ -27,6 +27,7 @@ interface DocFile {
   name: string;
   slug: string;
   path: string;
+  category: "reference" | "guide" | "info";
 }
 
 interface DocsClientProps {
@@ -206,57 +207,115 @@ export function DocsClient({
     );
   };
 
-  const renderSidebarContent = (isMobile = false) => (
-    <nav className="space-y-4 pb-8">
-      {/* File Selector Section */}
-      <div className="space-y-2">
-        <h3 className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400">
-          <FileText className="h-3 w-3" />
-          Documents
-        </h3>
-        <div className="space-y-1">
-          {availableFiles.map((file) => (
-            <Link
-              key={file.slug}
-              href={`/docs?file=${file.slug}`}
-              className={`block w-full rounded-lg px-3 py-2 text-sm font-bold transition-all ${currentFileSlug === file.slug
-                ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-              onClick={() => isMobile && setOpenMobileMenu(false)}
-            >
-              {file.name}
-            </Link>
-          ))}
-        </div>
-      </div>
+  const renderSidebarContent = (isMobile = false) => {
+    const referenceFiles = availableFiles.filter((f) => f.category === "reference");
+    const guideFiles = availableFiles.filter((f) => f.category === "guide");
+    const infoFiles = availableFiles.filter((f) => f.category === "info");
 
-      <div className="my-6 border-t border-gray-100" />
+    return (
+      <nav className="space-y-6 pb-8">
+        {/* Core Reference Section */}
+        {referenceFiles.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
+              <FileText className="h-3 w-3" />
+              Core Reference
+            </h3>
+            <div className="space-y-1">
+              {referenceFiles.map((file) => (
+                <Link
+                  key={file.slug}
+                  href={`/docs?file=${file.slug}`}
+                  className={`block w-full rounded-lg px-3 py-2 text-sm font-bold transition-all ${currentFileSlug === file.slug
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
+                  onClick={() => isMobile && setOpenMobileMenu(false)}
+                >
+                  {file.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* TOC Section */}
-      <div className="space-y-2">
-        <h3 className="text-xs font-black uppercase tracking-widest text-gray-400">
-          On This Page
-        </h3>
-        <div className="space-y-1">
-          {filteredToc.length > 0 ? (
-            filteredToc.map((section) => (
-              <SidebarItem
-                key={section.id}
-                section={section}
-                isOpen={isSectionOpen(section.id)}
-                onToggle={toggleSection}
-                onScroll={scrollToSection}
-                isMobile={isMobile}
-              />
-            ))
-          ) : (
-            <p className="py-4 text-center text-sm text-gray-400">No matching sections</p>
-          )}
+        {/* Developer Guides Section */}
+        {guideFiles.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
+              <ChevronRight className="h-3 w-3" />
+              Developer Guides
+            </h3>
+            <div className="space-y-1">
+              {guideFiles.map((file) => (
+                <Link
+                  key={file.slug}
+                  href={`/docs?file=${file.slug}`}
+                  className={`block w-full rounded-lg px-3 py-2 text-sm font-bold transition-all ${currentFileSlug === file.slug
+                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
+                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
+                  onClick={() => isMobile && setOpenMobileMenu(false)}
+                >
+                  {file.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Project Info Section */}
+        {infoFiles.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
+              <Search className="h-3 w-3" />
+              Project Info
+            </h3>
+            <div className="space-y-1">
+              {infoFiles.map((file) => (
+                <Link
+                  key={file.slug}
+                  href={`/docs?file=${file.slug}`}
+                  className={`block w-full rounded-lg px-3 py-2 text-sm font-bold transition-all ${currentFileSlug === file.slug
+                    ? "bg-slate-800 text-white shadow-md shadow-slate-800/20"
+                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
+                  onClick={() => isMobile && setOpenMobileMenu(false)}
+                >
+                  {file.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="my-6 border-t border-gray-100" />
+
+        {/* TOC Section */}
+        <div className="space-y-2">
+          <h3 className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+            On This Page
+          </h3>
+          <div className="space-y-1">
+            {filteredToc.length > 0 ? (
+              filteredToc.map((section) => (
+                <SidebarItem
+                  key={section.id}
+                  section={section}
+                  isOpen={isSectionOpen(section.id)}
+                  onToggle={toggleSection}
+                  onScroll={scrollToSection}
+                  isMobile={isMobile}
+                />
+              ))
+            ) : (
+              <p className="py-4 text-center text-sm text-gray-400">No matching sections</p>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
-  );
+      </nav>
+    );
+  };
 
   return (
     <div className="relative mx-auto flex w-full max-w-7xl flex-1 items-start px-4 sm:px-6 lg:px-8">

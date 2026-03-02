@@ -4,17 +4,26 @@ Welcome to the internal documentation portal for **NEXT-KVC** (Next Dashboard St
 
 ---
 
-## 🌟 Essential Technical Documentation
+## 🏗️ Technical Reference (Core Knowledge)
+*Deep-dive into architecture, configuration, and structural rules.*
 
 | Document | Purpose |
 | :--- | :--- |
-| **[🔐 Environment Variables](./ENVIRONMENT_VARIABLES.md)** | Full REST API configuration and detailed `.env` variable reference guide. |
-| **[🏗️ Project Architecture](./PROJECT_DOCUMENTATION.md)** | Deep dive into **FBA Architecture**, **Modular Prisma Schema**, and core backend logic. |
-| **[🤖 Agentic Framework](./AGENTIC_FRAMEWORK.md)** | Overview of the **.agent** directory, architectural rules, skills, and slash commands. |
-| **[🚀 Feature Journey](./FEATURE_IMPLEMENTATION_JOURNEY.md)** | Step-by-step workflow from Gemini Gem ideation to production code implementation. |
-| **[🚢 Deployment Guide](./DEPLOYMENT_GUIDE.md)** | Step-by-step instructions for deploying to **Vercel** and **GitHub**. |
-| **[📜 API Specification](./API_DOCUMENTATION.md)** | Detailed reference for every available REST endpoint. |
-| **[📝 Changelog](./CHANGELOG.md)** | Detailed history of additions, changes, and versioning. |
+| **[🏗️ Project Architecture](./PROJECT_DOCUMENTATION.md)** | Overview of **FBA**, **Modular Prisma**, and core backend patterns. |
+| **[🤖 Agentic Framework](./AGENTIC_FRAMEWORK.md)** | Rules and skills that govern how AI agents interact with this code. |
+| **[🔐 Environment Variables](./ENVIRONMENT_VARIABLES.md)** | Critical config options for local and production environments. |
+| **[📜 API Specification](./API_DOCUMENTATION.md)** | Technical reference for every available REST endpoint. |
+
+---
+
+## 🚀 Workflow Guides (Step-by-Step)
+*Action-oriented walkthroughs for daily development and deployment.*
+
+| Document | Purpose |
+| :--- | :--- |
+| **[💎 Feature Journey](./FEATURE_IMPLEMENTATION_JOURNEY.md)** | Step-by-step path from idea to production implementation. |
+| **[🚢 Deployment Guide](./DEPLOYMENT_GUIDE.md)** | Walkthrough for pushing to GitHub and launching on Vercel. |
+| **[📝 Changelog](./CHANGELOG.md)** | History of project versions and significant updates. |
 
 ### 🛠️ External Discovery & Specs
 - **[API Discovery Portal](/dashboard/api-docs)**: Internal UI for exploring every available endpoint (requires login).
