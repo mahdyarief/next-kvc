@@ -18,6 +18,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import pkg from "../../../../package.json";
+import { cn } from "@/lib/utils";
 
 interface NavGroup {
   label: string;
@@ -64,7 +65,6 @@ export function MobileNav({ appName = "NextStarter" }: { appName?: string }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-
     setMounted(true);
   }, []);
 
@@ -90,14 +90,14 @@ export function MobileNav({ appName = "NextStarter" }: { appName?: string }) {
           <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex w-[85vw] flex-col p-0 sm:w-[320px]">
-        <SheetHeader className="border-b border-slate-100 px-5 py-4 text-left">
-          <SheetTitle className="text-xl font-bold text-slate-800">{appName}</SheetTitle>
-          <p className="-mt-1 text-[11px] text-slate-400">Application Starter</p>
+      <SheetContent side="left" className="flex w-[85vw] flex-col p-0 sm:w-[320px] glass-panel border-r-border/30">
+        <SheetHeader className="border-b border-border/40 px-5 py-6 text-left">
+          <SheetTitle className="font-heading text-xl font-bold tracking-tight">{appName}</SheetTitle>
+          <p className="text-muted-foreground/60 -mt-1 text-[11px] font-medium uppercase tracking-wider">Application Starter</p>
         </SheetHeader>
 
 
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-3">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-6">
           {navGroups.map((group) => {
             const visibleItems = group.items.filter(
               (item) => !item.superadminOnly || userRole === "SUPERADMIN"
@@ -105,27 +105,29 @@ export function MobileNav({ appName = "NextStarter" }: { appName?: string }) {
             if (visibleItems.length === 0) return null;
 
             return (
-              <div key={group.label} className="mb-1">
+              <div key={group.label} className="mb-6">
                 {group.label !== "Main" && (
-                  <p className="px-3 py-1.5 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
+                  <p className="text-muted-foreground/30 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest">
                     {group.label}
                   </p>
                 )}
-                <div className="space-y-0.5">
+                <div className="space-y-1">
                   {visibleItems.map(({ href, label, icon: Icon, external }) => (
                     <Link
                       key={href}
                       href={href}
                       target={external ? "_blank" : undefined}
                       onClick={() => setOpen(false)}
-                      className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${isActive(href)
-                        ? "bg-slate-900 text-white shadow-sm"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                        } `}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                        isActive(href)
+                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      )}
                     >
                       <Icon
                         size={18}
-                        className={`flex-shrink-0 ${isActive(href) ? "text-white" : "text-slate-400"}`}
+                        className={cn("flex-shrink-0", isActive(href) ? "text-primary-foreground" : "text-muted-foreground/50")}
                       />
                       <span>{label}</span>
                     </Link>
@@ -136,22 +138,22 @@ export function MobileNav({ appName = "NextStarter" }: { appName?: string }) {
           })}
         </nav>
 
-        <div className="border-t border-slate-100 bg-slate-50/50 p-4">
-          <div className="mb-3 flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-semibold text-slate-600">
+        <div className="border-t border-border/40 bg-muted/30 p-4 backdrop-blur-md">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="bg-primary/10 text-primary border-primary/20 font-heading flex h-9 w-9 items-center justify-center rounded-xl border text-sm font-bold">
               {session?.user?.name?.charAt(0)?.toUpperCase() || "U"}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-slate-700">
+              <p className="truncate font-heading text-[13px] font-semibold text-foreground leading-none">
                 {session?.user?.name || "User"}
               </p>
-              <p className="truncate text-[11px] text-slate-400">{session?.user?.email}</p>
+              <p className="text-muted-foreground/60 mt-1 truncate text-[11px] font-medium leading-none">{session?.user?.email}</p>
             </div>
           </div>
           <Button
             variant="outline"
             size="sm"
-            className="flex h-8 w-full items-center justify-center gap-2 text-xs"
+            className="flex h-9 w-full items-center justify-center gap-2 rounded-xl border-border/40 bg-background/50 text-xs font-semibold shadow-sm transition-all hover:bg-accent"
             onClick={async () => {
               setOpen(false);
               await signOut({ callbackUrl: "/auth/login" });
@@ -159,7 +161,7 @@ export function MobileNav({ appName = "NextStarter" }: { appName?: string }) {
           >
             <LogOut size={14} /> Sign Out
           </Button>
-          <p className="mt-2 text-center font-mono text-[10px] text-slate-300">v{pkg.version}</p>
+          <div className="text-muted-foreground/20 mt-4 text-center font-mono text-[9px] font-medium tracking-[0.2em] uppercase">v{pkg.version}</div>
         </div>
       </SheetContent>
     </Sheet>

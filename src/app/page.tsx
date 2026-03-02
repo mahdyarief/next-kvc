@@ -5,12 +5,16 @@ import {
   Zap,
   Shield,
   Globe,
-  MessageSquare,
+  Bell,
   Clock,
   Code,
-  ChevronRight,
+  Sparkles,
+  Database,
+  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import { Badge } from "@/components/ui/badge";
 import fs from "fs";
 import path from "path";
 import { Logo } from "@/components/brand/logo";
@@ -27,55 +31,59 @@ export const metadata = {
   },
 };
 
-
 export default function Home() {
   const packagePath = path.join(process.cwd(), "package.json");
   let version = "v1.5.0";
   try {
     const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
     version = `v${packageJson.version}`;
-  } catch (error) {
-    console.error("Failed to read package.json", error);
+  } catch {
+    // fallback to default
   }
 
   return (
-    <div className="selection:bg-primary/30 selection:text-primary-foreground flex min-h-screen flex-col overflow-hidden">
-      {/* Navbar - Floating Glass */}
-      <header className="fixed inset-x-6 top-6 z-50 transition-all duration-300">
-        <div className="glass shadow-primary/5 mx-auto flex h-20 max-w-7xl items-center justify-between rounded-[2rem] border-white/40 px-6 shadow-2xl md:px-10 dark:border-white/5 dark:shadow-black/40">
-          <Link href="/" className="transition-opacity hover:opacity-90">
-            <Logo size={42} showText={true} />
+    <div className="selection:bg-primary/20 selection:text-primary-foreground flex min-h-screen flex-col overflow-hidden">
+
+      {/* ── Floating Navbar ───────────────────────────── */}
+      <header className="fixed inset-x-4 top-5 z-50 sm:inset-x-8 sm:top-6">
+        <div className="glass mx-auto flex h-14 max-w-6xl items-center justify-between rounded-xl px-4 sm:px-6">
+          <Link href="/" className="transition-opacity hover:opacity-80">
+            <Logo size={36} showText={true} />
           </Link>
 
-          <nav className="hidden items-center gap-10 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             <Link
               href="#features"
-              className="text-muted-foreground hover:text-primary text-sm font-bold transition-all"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               Features
             </Link>
             <Link
               href="/docs"
-              className="text-muted-foreground hover:text-primary text-sm font-bold transition-all"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
-              API & Docs
+              Docs
             </Link>
             <Link
               href="https://github.com/kelasvibecoding/next-kvc"
-              className="text-muted-foreground hover:text-primary flex items-center gap-2 text-sm font-bold transition-all"
+              className="text-muted-foreground hover:text-foreground flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
-              <Github className="h-4 w-4" /> GitHub
+              <Github className="h-4 w-4" />
+              GitHub
             </Link>
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link href="/auth/login" className="hidden sm:block">
-              <Button variant="ghost" className="hover:bg-primary/5 text-sm font-bold">
+              <Button variant="ghost" size="sm" className="text-sm font-medium">
                 Sign In
               </Button>
             </Link>
             <Link href="/auth/register">
-              <Button className="from-primary shadow-primary/20 hover:shadow-primary/40 h-12 rounded-2xl bg-gradient-to-r to-blue-600 px-8 text-sm font-black shadow-xl transition-all hover:-translate-y-0.5">
+              <Button
+                size="sm"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground h-9 rounded-lg px-4 text-sm font-semibold shadow-sm transition-all"
+              >
                 Get Started
               </Button>
             </Link>
@@ -84,181 +92,339 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative flex min-h-[95vh] items-center overflow-hidden pt-44 pb-32 lg:pt-60 lg:pb-48">
-          {/* Animated Premium Background Components */}
-          <div className="pointer-events-none absolute top-0 left-1/2 h-[1000px] w-full -translate-x-1/2 overflow-hidden">
-            <div className="from-primary/10 animate-pulse-glow absolute top-[-200px] left-1/2 h-[1200px] w-[1200px] -translate-x-1/2 rounded-full bg-gradient-to-b via-blue-500/5 to-transparent blur-[160px]" />
-            <div
-              className="animate-float absolute top-[20%] left-[10%] h-[600px] w-[600px] rounded-full bg-blue-400/10 blur-[120px]"
-              style={{ animationDuration: "15s" }}
-            />
-            <div
-              className="bg-primary/10 animate-float absolute top-[40%] right-[5%] h-[500px] w-[500px] rounded-full blur-[100px]"
-              style={{ animationDuration: "12s", animationDelay: "2s" }}
-            />
-          </div>
+        {/* ── Hero Section ─────────────────────────────── */}
+        <section className="relative flex min-h-[92vh] items-center pt-32 pb-24 lg:pt-44 lg:pb-36">
 
-          <div className="relative z-10 container mx-auto px-6 text-center">
-            <div className="glass-panel text-primary animate-in fade-in slide-in-from-bottom-5 border-primary/10 mb-12 inline-flex items-center rounded-2xl px-5 py-2 text-sm font-bold duration-1000">
-              <span className="relative mr-3 flex h-2 w-2">
-                <span className="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
-                <span className="bg-primary relative inline-flex h-2 w-2 rounded-full"></span>
-              </span>
-              Modern Stack {version} is live
-              <ChevronRight className="ml-1.5 h-4 w-4 opacity-60" />
-            </div>
+          {/* Decorative gold line — top */}
+          <div className="from-primary/0 via-primary/30 to-primary/0 pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r" />
 
-            <h1 className="animate-in fade-in slide-in-from-bottom-10 mx-auto mb-10 max-w-6xl text-6xl leading-[0.95] font-black tracking-tight duration-1000 sm:text-7xl md:text-8xl lg:text-9xl">
-              Build your <span className="text-primary italic">Dreams</span> <br />
-              <span className="text-gradient">Faster than Ever.</span>
-            </h1>
+          <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+            {/* Grid layout — content left, decorative right */}
+            <div className="grid items-center gap-16 lg:grid-cols-[1fr_auto]">
 
-            <p className="text-muted-foreground animate-in fade-in slide-in-from-bottom-10 mx-auto mb-16 max-w-[46rem] text-xl leading-relaxed font-medium delay-200 duration-1000 sm:text-2xl">
-              A premium, production-ready starter template featuring Next.js 15,
-              Prisma, Auth.js, and a beautifully crafted Dashboard shell.
-            </p>
+              {/* Left — Editorial text block */}
+              <div className="max-w-2xl">
+                {/* Version badge */}
+                <div className="mb-8 inline-flex items-center gap-2.5 animate-fade-up" style={{ animationDelay: "0ms" }}>
+                  <Badge
+                    variant="outline"
+                    className="border-primary/30 text-primary bg-primary/5 gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold"
+                  >
+                    <span className="bg-primary h-1.5 w-1.5 rounded-full" />
+                    {version} — Now live
+                  </Badge>
+                </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-10 flex flex-col items-center justify-center gap-6 delay-300 duration-1000 sm:flex-row">
-              <Link href="/dashboard" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="shadow-primary/30 hover:shadow-primary/50 from-primary group h-16 w-full rounded-[1.5rem] bg-gradient-to-r to-blue-600 px-10 text-xl font-black shadow-2xl transition-all hover:-translate-y-1"
+                {/* Headline */}
+                <h1
+                  className="font-heading mb-6 text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-[1.05] tracking-tight animate-fade-up"
+                  style={{ animationDelay: "60ms" }}
                 >
-                  Enter Dashboard
-                  <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1.5" />
-                </Button>
-              </Link>
-            </div>
+                  Build your next{" "}
+                  <span className="text-gradient">big thing</span>
+                  <br />
+                  <span className="text-muted-foreground font-light">faster than ever.</span>
+                </h1>
 
+                {/* Sub text */}
+                <p
+                  className="text-muted-foreground mb-10 max-w-xl text-lg leading-relaxed animate-fade-up"
+                  style={{ animationDelay: "120ms" }}
+                >
+                  A premium, production-ready starter featuring{" "}
+                  <span className="text-foreground font-medium">Next.js 15</span>,{" "}
+                  <span className="text-foreground font-medium">Prisma ORM</span>,{" "}
+                  <span className="text-foreground font-medium">Auth.js v5</span>, and a
+                  fully-crafted dashboard shell. Skip the boilerplate.
+                </p>
+
+                {/* CTA buttons */}
+                <div
+                  className="flex flex-wrap items-center gap-3 animate-fade-up"
+                  style={{ animationDelay: "180ms" }}
+                >
+                  <Link href="/dashboard">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground group h-11 rounded-lg px-6 font-semibold shadow-sm transition-all"
+                    >
+                      Enter Dashboard
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </Button>
+                  </Link>
+                  <Link href="https://github.com/kelasvibecoding/next-kvc">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="h-11 rounded-lg px-6 font-semibold transition-all"
+                    >
+                      <Github className="mr-2 h-4 w-4" />
+                      View Source
+                    </Button>
+                  </Link>
+                </div>
+
+                {/* Keyboard shortcut hint — uses Kbd component */}
+                <div
+                  className="mt-8 flex items-center gap-2 animate-fade-up"
+                  style={{ animationDelay: "240ms" }}
+                >
+                  <span className="text-muted-foreground text-xs">Quick start →</span>
+                  <KbdGroup>
+                    <Kbd>npx</Kbd>
+                    <Kbd>create-next-app</Kbd>
+                  </KbdGroup>
+                </div>
+              </div>
+
+              {/* Right — Decorative tech stack card */}
+              <div className="hidden lg:block animate-fade-up" style={{ animationDelay: "300ms" }}>
+                <TechCard version={version} />
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section id="features" className="relative py-40">
-          <div className="relative z-10 container mx-auto px-6">
-            <div className="mb-32 text-center">
-              <h2 className="text-foreground mb-8 text-4xl leading-tight font-black tracking-tight sm:text-6xl">
-                Mastering Connectivity
+        {/* ── Features Section ── Bento Grid ───────────── */}
+        <section id="features" className="relative py-32">
+          {/* Section separator */}
+          <div className="from-border/0 via-border to-border/0 pointer-events-none absolute top-0 left-8 right-8 h-px bg-gradient-to-r" />
+
+          <div className="mx-auto max-w-6xl px-6">
+            {/* Section header — left aligned */}
+            <div className="mb-16 max-w-xl">
+              <p className="text-primary mb-3 text-xs font-semibold tracking-widest uppercase">
+                What&apos;s included
+              </p>
+              <h2 className="font-heading mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
+                Everything you need.{" "}
+                <span className="text-muted-foreground font-light">Nothing you don&apos;t.</span>
               </h2>
-              <p className="text-muted-foreground mx-auto max-w-3xl text-xl font-medium">
-                Precision-engineered tools to bridge your business logic with the world&apos;s most
-                popular messaging platform.
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Production-grade infrastructure baked in from day one.
               </p>
             </div>
 
-            <div className="mx-auto grid max-w-7xl gap-10 px-4 md:grid-cols-2 lg:grid-cols-3">
+            {/* Bento grid */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+              {/* Large hero feature — Auth */}
               <FeatureCard
-                icon={<Shield className="h-7 w-7 text-blue-600" />}
+                className="md:col-span-2 md:row-span-2"
+                icon={<Shield className="h-6 w-6" />}
+                tag="Security"
                 title="Secure Auth"
-                description="Robust authentication system powered by Auth.js with support for multiple providers."
+                description="Full authentication system powered by Auth.js v5 with credential-based login, session management, and role-based access control. Sign in, sign out, and protect routes with ease."
+                large
               />
+              {/* Medium feature */}
               <FeatureCard
-                icon={<Zap className="text-primary h-7 w-7" />}
+                className="md:col-span-1"
+                icon={<LayoutDashboard className="h-5 w-5" />}
+                tag="UI"
                 title="Dashboard Shell"
-                description="A beautifully crafted, responsive dashboard shell with sidebar navigation and profile management."
+                description="Responsive sidebar navigation with collapsible mode, mobile drawer, and profile management."
               />
               <FeatureCard
-                icon={<MessageSquare className="h-7 w-7 text-blue-500" />}
+                className="md:col-span-1"
+                icon={<Bell className="h-5 w-5" />}
+                tag="Realtime"
                 title="Notifications"
-                description="Real-time notification system to keep your users updated on important system events."
+                description="Real-time push notifications via Socket.IO with toast alerts and an unread badge system."
               />
               <FeatureCard
-                icon={<Clock className="h-7 w-7 text-indigo-500" />}
+                className="md:col-span-1"
+                icon={<Database className="h-5 w-5" />}
+                tag="Database"
                 title="Prisma Ready"
-                description="Pre-configured Prisma ORM with SQLite (fallback) for effortless database management and migrations."
+                description="Modular Prisma schema (prisma/schema/*.prisma) with SQLite fallback and migration support."
               />
               <FeatureCard
-                icon={<Globe className="h-7 w-7 text-sky-500" />}
+                className="md:col-span-1"
+                icon={<Globe className="h-5 w-5" />}
+                tag="Stack"
                 title="Modern Stack"
-                description="Built with the latest technologies: Next.js 15 (App Router), Tailwind 4, and Shadcn UI."
+                description="Next.js 15 App Router, Tailwind v4, Shadcn UI, and full TypeScript throughout."
               />
               <FeatureCard
-                icon={<Code className="h-7 w-7 text-blue-400" />}
-                title="Type-Safe Core"
-                description="Fully written in TypeScript, providing a superior developer experience and fewer bugs."
+                className="md:col-span-1"
+                icon={<Zap className="h-5 w-5" />}
+                tag="DX"
+                title="API Layer"
+                description="Standardized API routes with withErrorHandler, api.success(), and typed error handling."
               />
+              <FeatureCard
+                className="md:col-span-1"
+                icon={<Code className="h-5 w-5" />}
+                tag="Core"
+                title="Type-Safe"
+                description="Fully TypeScript. Zod schemas co-located with forms. No any. No guesswork."
+              />
+            </div>
+
+            {/* Keyboard shortcuts callout */}
+            <div className="surface mt-8 flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3">
+                <Sparkles className="text-primary h-5 w-5 flex-shrink-0" />
+                <div>
+                  <p className="font-heading text-sm font-semibold">Developer shortcuts</p>
+                  <p className="text-muted-foreground text-xs">Quick access everywhere in the dashboard</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Toggle sidebar</span>
+                  <KbdGroup>
+                    <Kbd>⌘</Kbd>
+                    <Kbd>B</Kbd>
+                  </KbdGroup>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Notifications</span>
+                  <KbdGroup>
+                    <Kbd>⌘</Kbd>
+                    <Kbd>N</Kbd>
+                  </KbdGroup>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Settings</span>
+                  <KbdGroup>
+                    <Kbd>⌘</Kbd>
+                    <Kbd>,</Kbd>
+                  </KbdGroup>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-sidebar-border bg-background relative z-10 border-t pt-24 pb-12">
-        <div className="container mx-auto max-w-7xl px-6">
-          <div className="mb-20 flex flex-col items-start justify-between gap-12 md:flex-row">
-            <div className="space-y-6">
-              <Logo size={48} showText={true} />
-              <p className="text-muted-foreground max-w-[280px] text-lg leading-relaxed font-medium">
-                The modern, flexible foundation for your next web application.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-16 sm:grid-cols-3 md:gap-24">
-              <div className="space-y-6">
-                <h4 className="text-foreground text-sm font-black tracking-[0.2em] uppercase">
-                  Product
-                </h4>
-                <ul className="text-muted-foreground space-y-4 text-base font-bold">
-                  <li>
-                    <Link href="#features" className="hover:text-primary transition-colors">
-                      Features
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/dashboard" className="hover:text-primary transition-colors">
-                      Dashboard
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="space-y-6">
-                <h4 className="text-foreground text-sm font-black tracking-[0.2em] uppercase">
-                  Legal
-                </h4>
-                <ul className="text-muted-foreground space-y-4 text-base font-bold">
-                  <li>
-                    <Link href="/privacy" className="hover:text-primary transition-colors">
-                      Privacy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/terms" className="hover:text-primary transition-colors">
-                      Terms
-                    </Link>
-                  </li>
-                </ul>
+      {/* ── Footer ───────────────────────────────────── */}
+      <footer className="border-t border-border/60 py-10">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-6">
+              <Logo size={32} showText={false} />
+              <div className="flex gap-5">
+                <Link href="#features" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                  Features
+                </Link>
+                <Link href="/docs" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                  Docs
+                </Link>
+                <Link href="/privacy" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                  Terms
+                </Link>
               </div>
             </div>
-          </div>
-          <div className="border-sidebar-border flex flex-col items-center justify-between gap-6 border-t pt-10 sm:flex-row">
-            <p className="text-muted-foreground text-base font-bold">
-              © {new Date().getFullYear()} Next.js Starter. Built with ❤️.
-            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="https://github.com/kelasvibecoding/next-kvc"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Github className="h-4 w-4" />
+              </Link>
+              <span className="text-muted-foreground text-xs">
+                © {new Date().getFullYear()} Next.js Starter
+              </span>
+            </div>
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
 
+/* ── Internal components ─────────────────────────────── */
+
+function TechCard({ version }: { version: string }) {
+  const stack = [
+    { label: "Next.js", version: "15", color: "text-foreground" },
+    { label: "Prisma", version: "6", color: "text-primary" },
+    { label: "Tailwind", version: "4", color: "text-blue-600 dark:text-blue-400" },
+    { label: "Auth.js", version: "v5", color: "text-foreground" },
+    { label: "TypeScript", version: "5", color: "text-primary" },
+    { label: "Shadcn UI", version: "—", color: "text-foreground" },
+  ];
+
+  return (
+    <div className="surface-raised w-64 overflow-hidden rounded-2xl">
+      {/* Header bar */}
+      <div className="border-b border-border/60 bg-muted/30 px-4 py-3">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <div className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+            <div className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+            <div className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
+          </div>
+          <span className="font-mono text-[10px] text-muted-foreground ml-2">
+            package.json
+          </span>
+        </div>
+      </div>
+      {/* Stack list */}
+      <div className="divide-y divide-border/40 px-4">
+        {stack.map((item) => (
+          <div key={item.label} className="flex items-center justify-between py-2.5">
+            <span className={`font-mono text-xs font-medium ${item.color}`}>
+              {item.label}
+            </span>
+            <Kbd>{item.version}</Kbd>
+          </div>
+        ))}
+      </div>
+      {/* Footer */}
+      <div className="border-t border-border/60 bg-muted/20 px-4 py-2.5 flex items-center justify-between">
+        <span className="font-mono text-[10px] text-muted-foreground">starter</span>
+        <Badge variant="outline" className="text-primary border-primary/30 text-[9px] px-1.5 py-0.5 h-auto">
+          {version}
+        </Badge>
+      </div>
     </div>
   );
 }
 
 function FeatureCard({
   icon,
+  tag,
   title,
   description,
+  large,
+  className,
 }: {
   icon: React.ReactNode;
+  tag: string;
   title: string;
   description: string;
+  large?: boolean;
+  className?: string;
 }) {
   return (
-    <div className="group glass-panel hover-lift shadow-primary/5 relative overflow-hidden rounded-[2.5rem] border-white/20 p-10 shadow-2xl dark:border-white/5">
-      <div className="from-primary/5 pointer-events-none absolute inset-0 bg-gradient-to-br to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="relative z-10 flex flex-col items-center text-center">
-        <div className="bg-primary/5 text-primary border-primary/10 group-hover:bg-primary mb-8 inline-flex rounded-[1.5rem] border p-5 shadow-sm transition-all duration-500 ease-out group-hover:scale-110 group-hover:text-white">
-          {icon}
+    <div
+      className={`surface group relative overflow-hidden p-6 transition-all duration-200 hover:shadow-md ${large ? "flex flex-col justify-between" : ""} ${className ?? ""}`}
+    >
+      {/* Subtle gold hover accent */}
+      <div className="from-primary/0 to-primary/[0.04] pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+      <div className="relative z-10">
+        {/* Icon + tag row */}
+        <div className="mb-4 flex items-center justify-between">
+          <div className="bg-primary/8 text-primary border-primary/15 inline-flex rounded-lg border p-2.5">
+            {icon}
+          </div>
+          <span className="text-muted-foreground/60 font-mono text-[10px] font-semibold tracking-widest uppercase">
+            {tag}
+          </span>
         </div>
-        <h3 className="text-foreground mb-4 text-2xl font-black tracking-tight italic">{title}</h3>
-        <p className="text-muted-foreground text-lg leading-relaxed font-medium">{description}</p>
+
+        <h3 className={`font-heading text-foreground font-semibold tracking-tight ${large ? "mb-3 text-2xl" : "mb-2 text-base"}`}>
+          {title}
+        </h3>
+        <p className={`text-muted-foreground leading-relaxed ${large ? "text-base" : "text-sm"}`}>
+          {description}
+        </p>
       </div>
     </div>
   );

@@ -1,17 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import Link from "next/link";
-import {
-  Activity,
-} from "lucide-react";
-
+import { TrendingUp, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Stat {
   title: string;
-  value: number;
+  value: number | string;
   icon: React.ElementType;
   description: string;
-  color: string;
-  bg: string;
+  color?: string;
+  bg?: string;
 }
 
 interface QuickAction {
@@ -19,6 +18,7 @@ interface QuickAction {
   label: string;
   icon: React.ElementType;
   description: string;
+  kbd?: string;
 }
 
 interface DashboardViewProps {
@@ -28,48 +28,48 @@ interface DashboardViewProps {
 
 export function DashboardView({ stats, quickActions }: DashboardViewProps) {
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <h2 className="text-foreground text-3xl font-black tracking-tight italic sm:text-4xl">
-            Dashboard <span className="text-primary opacity-50">/</span> Overview
-          </h2>
-          <p className="text-muted-foreground text-lg font-medium">
-            System health and automation insights
-          </p>
-        </div>
+    <div className="space-y-8 max-w-5xl">
+      {/* ── Page Header ─────────────────────────────── */}
+      <div className="flex flex-col gap-1">
+        <h1 className="font-heading text-2xl font-bold tracking-tight">
+          Overview
+        </h1>
+        <p className="text-muted-foreground text-sm">
+          System health and key metrics at a glance.
+        </p>
       </div>
 
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* ── Stats Grid ──────────────────────────────── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
             <Card
               key={stat.title}
-              className="glass-panel shadow-primary/5 hover:shadow-primary/10 group overflow-hidden rounded-[2rem] border-white/40 shadow-2xl transition-all duration-500 hover:-translate-y-1 dark:border-white/5"
+              className="surface-raised group overflow-hidden transition-all duration-200 hover:shadow-md"
             >
-              <CardContent className="p-8">
-                <div className="mb-6 flex items-center justify-between">
-                  <div
-                    className={`bg-primary/5 text-primary border-primary/10 group-hover:bg-primary rounded-2xl border p-4 shadow-sm transition-all duration-500 ease-out group-hover:text-white`}
-                  >
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-muted-foreground mb-1 text-xs font-black tracking-[0.2em] uppercase">
-                      {stat.title}
-                    </p>
-                    <p className="text-foreground text-4xl font-black tracking-tight italic">
-                      {stat.value}
-                    </p>
+              <CardContent className="p-5">
+                {/* Value row */}
+                <div className="mb-3 flex items-start justify-between">
+                  <p className="font-heading text-3xl font-bold tracking-tight">
+                    {stat.value}
+                  </p>
+                  <div className={cn(
+                    "rounded-lg border p-2",
+                    stat.bg ? stat.bg : "bg-primary/8",
+                    stat.color ? stat.color : "text-primary",
+                    !stat.color && !stat.bg && "border-primary/15"
+                  )}>
+                    <Icon className="h-4 w-4" />
                   </div>
                 </div>
-                <div className="border-border/50 flex items-center justify-between border-t pt-4">
-                  <p className="text-muted-foreground/70 text-sm font-bold">{stat.description}</p>
-                  <Activity className="text-primary/30 h-4 w-4" />
+                {/* Label + trend */}
+                <div className="space-y-0.5">
+                  <p className="text-foreground text-sm font-medium">{stat.title}</p>
+                  <p className="text-muted-foreground flex items-center gap-1 text-xs">
+                    <TrendingUp className="h-3 w-3 opacity-50" />
+                    {stat.description}
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -77,40 +77,47 @@ export function DashboardView({ stats, quickActions }: DashboardViewProps) {
         })}
       </div>
 
-      {/* Quick Actions Section */}
-      <div className="mt-12">
-        <h3 className="text-foreground mb-6 flex items-center gap-3 text-sm font-black tracking-[0.3em] uppercase">
-          <div className="bg-primary h-1 w-8 rounded-full" />
-          Quick Actions
-        </h3>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* ── Quick Actions ────────────────────────────── */}
+      <div className="animate-fade-up" style={{ animationDelay: "100ms" }}>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-heading text-sm font-semibold tracking-tight">
+            Quick Actions
+          </h2>
+          <p className="text-muted-foreground text-xs font-medium">
+            Shortcuts enabled
+          </p>
+        </div>
+
+        <div className="surface overflow-hidden rounded-xl divide-y divide-border/60">
           {quickActions.map((action) => {
             const Icon = action.icon;
             return (
-              <Link key={action.href} href={action.href}>
-                <Card className="glass-panel shadow-primary/5 hover:shadow-primary/10 group cursor-pointer overflow-hidden rounded-2xl border-white/40 shadow-xl transition-all duration-300 hover:translate-x-2 dark:border-white/5">
-                  <CardContent className="flex items-center gap-5 p-5">
-                    <div className="bg-primary/5 group-hover:bg-primary border-primary/10 rounded-xl border p-3 shadow-sm transition-all duration-500">
-                      <Icon className="text-primary h-6 w-6 transition-colors group-hover:text-white" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-foreground group-hover:text-primary text-base font-black tracking-tight italic transition-colors">
-                        {action.label}
-                      </p>
-                      <p className="text-muted-foreground truncate text-sm font-medium">
-                        {action.description}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+              <Link
+                key={action.href}
+                href={action.href}
+                className="group flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-accent/50"
+              >
+                <div className="bg-primary/8 text-primary border-primary/15 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-foreground text-sm font-semibold group-hover:text-primary transition-colors">{action.label}</p>
+                  <p className="text-muted-foreground truncate text-xs">{action.description}</p>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {action.kbd && (
+                    <KbdGroup>
+                      <Kbd className="bg-muted shadow-none border-border/40">⌘</Kbd>
+                      <Kbd className="bg-muted shadow-none border-border/40">{action.kbd}</Kbd>
+                    </KbdGroup>
+                  )}
+                  <ArrowRight className="text-primary h-4 w-4 -translate-x-2 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                </div>
               </Link>
             );
           })}
         </div>
       </div>
-
-
     </div>
   );
 }
-

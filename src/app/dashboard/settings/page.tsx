@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RefreshCw, Save, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
   const { data: authSession } = useSession();
@@ -80,13 +81,15 @@ export default function SettingsPage() {
       </div>
 
       {!isSuperAdmin && (
-        <Card className="border-yellow-200 bg-yellow-50">
+        <Card className="border-amber-500/20 bg-amber-500/5">
           <CardContent className="pt-6">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="mt-0.5 h-5 w-5 text-yellow-600" />
+            <div className="flex items-start gap-4">
+              <div className="bg-amber-500/10 rounded-xl p-2.5">
+                <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-500" />
+              </div>
               <div>
-                <p className="text-sm font-medium text-yellow-900">View Only Mode</p>
-                <p className="mt-1 text-xs text-yellow-700">
+                <p className="font-heading text-sm font-semibold text-amber-900 dark:text-amber-500">View Only Mode</p>
+                <p className="mt-1 text-xs text-amber-800 dark:text-amber-500/80 leading-relaxed">
                   Only Superadmins can modify system settings. You can view current settings but
                   cannot make changes.
                 </p>
@@ -97,7 +100,7 @@ export default function SettingsPage() {
       )}
 
       {/* System Configuration (Global) */}
-      <Card className="border-primary/20 bg-primary/5">
+      <Card className="border-primary/20 bg-primary/5 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-xl">App Configuration</CardTitle>
           <CardDescription>

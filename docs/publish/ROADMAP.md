@@ -10,7 +10,7 @@ This document tracks the completion progress of **NEXT-KVC** toward being a full
 | :--- | :--- |
 | **Auth (NextAuth v5)** | Secure Credentials provider with JWT sessions |
 | **RBAC** | Role-based access: `SUPERADMIN`, `ADMIN`, `CUSTOMER` |
-| **API Key Auth** | Per-user `nsk_` prefixed API keys via `x-api-key` header |
+| **API Key Auth** | Per-user `kvc` prefixed API keys via `x-api-key` header |
 | **Dashboard Shell** | Premium sidebar, navbar, mobile nav, real-time clock |
 | **Socket.IO** | Real-time bi-directional communication engine |
 | **Notifications** | System alerts with real-time delivery + DB persistence |
@@ -23,6 +23,7 @@ This document tracks the completion progress of **NEXT-KVC** toward being a full
 | **API Docs Portal** | Internal markdown-powered documentation at `/docs` |
 | **Modular Prisma Schema** | `prisma/schema/*.prisma` folder pattern |
 | **Landing Page** | Premium public homepage with hero and feature sections |
+| **Dark Mode** | `next-themes` provider · Sun/Moon/System toggle in Navbar · persists in `localStorage` |
 
 ---
 
@@ -57,16 +58,16 @@ This document tracks the completion progress of **NEXT-KVC** toward being a full
 
 ---
 
-### Phase 3 — Dark Mode `v1.5`
+### Phase 3 — Dark Mode `v1.5` ✅
 
 > **Goal**: Provide a complete light/dark theme experience out of the box.
 
-- [ ] Integrate `next-themes` provider
-- [ ] Sun/Moon toggle button in the Navbar
-- [ ] Persist preference in `localStorage`
-- [ ] Ensure all Shadcn/UI components respect the active theme
+- [x] Integrate `next-themes` provider
+- [x] Sun/Moon/System toggle button in the Navbar
+- [x] Persist preference in `localStorage`
+- [x] All Shadcn/UI components respect the active theme via CSS class strategy
 
-**Estimated effort**: 🟢 Low
+**Status**: ✅ Shipped
 
 ---
 
@@ -132,7 +133,7 @@ This document tracks the completion progress of **NEXT-KVC** toward being a full
 | # | Feature | Impact | Effort | Target Version |
 |---|---|:---:|:---:|:---:|
 | 1 | 👤 Profile Page | 🔴 High | 🟢 Low | v1.4 |
-| 2 | 🌙 Dark Mode | 🔴 High | 🟢 Low | v1.5 |
+| 2 | 🌙 Dark Mode ✅ | 🔴 High | 🟢 Low | v1.5 |
 | 3 | 📋 Audit Log UI | 🔴 High | 🟡 Medium | v1.5 |
 | 4 | 🔗 Webhook UI | 🟡 Medium | 🟡 Medium | v1.6 |
 | 5 | 📧 Email / Password Reset | 🔴 High | 🔴 High | v1.7 |
@@ -147,7 +148,7 @@ This document tracks the completion progress of **NEXT-KVC** toward being a full
 | :--- | :--- |
 | `v1.3` | Environment cleanup & API alignment ✅ |
 | `v1.4` | User Self-Service (Profile + Avatar + API Key UI) |
-| `v1.5` | Audit Log UI + Dark Mode |
+| `v1.5` | Dark Mode ✅ + Audit Log UI |
 | `v1.6` | Webhook Management |
 | `v1.7` | Email Integration + Rate Limiting |
 | `v2.0` | Onboarding Wizard + Empty States |

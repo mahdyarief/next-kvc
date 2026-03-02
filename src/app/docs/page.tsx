@@ -2,13 +2,13 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import { DocsClient } from "./docs-client";
+import { Logo } from "@/components/brand/logo";
 
 export const metadata = {
-  title: "Public Documentation - NEXT-KVC",
-  description: "Complete reference for NEXT-KVC Dashboard Starter",
+  title: "Documentation — NextStarter",
+  description: "Advanced Next.js + Prisma Dashboard Starter Documentation",
 };
 
-// Interface for Nested TOC
 export interface TocItem {
   text: string;
   id: string;
@@ -51,32 +51,25 @@ export default async function PublicDocsPage({
   const packagePath = path.join(process.cwd(), "package.json");
   let version = "v1.0.0";
 
-  // Get all markdown files in docs/
   let availableFiles: DocFile[] = [];
   try {
     const files = fs.readdirSync(docsDir).filter((file) => file.endsWith(".md"));
-
-    // Sort files based on DOC_ORDER
     const sortedFiles = DOC_ORDER.filter((orderedFile) => files.includes(orderedFile));
-
-    // Add any files not in DOC_ORDER at the end
     const remainingFiles = files.filter((file) => !DOC_ORDER.includes(file));
     const allFiles = [...sortedFiles, ...remainingFiles];
 
     availableFiles = allFiles.map((file) => {
-      // Create a pretty name
       let prettyName = file.replace(".md", "").replace(/_/g, " ");
       let category: "reference" | "guide" | "info" = "reference";
 
-      // Special case mappings for better UI and categorization
       const nameMap: Record<string, { name: string; category: "reference" | "guide" | "info" }> = {
-        README: { name: "Welcome & Index", category: "reference" },
-        "ENVIRONMENT VARIABLES": { name: "Environment Setup", category: "reference" },
+        README: { name: "Introduction", category: "reference" },
+        "ENVIRONMENT VARIABLES": { name: "Environment Variables", category: "reference" },
         "PROJECT DOCUMENTATION": { name: "Project Architecture", category: "reference" },
         "AGENTIC FRAMEWORK": { name: "Agentic Framework", category: "reference" },
-        "FEATURE IMPLEMENTATION JOURNEY": { name: "Feature Journey", category: "guide" },
+        "FEATURE IMPLEMENTATION JOURNEY": { name: "Feature Implementation", category: "guide" },
         "DEPLOYMENT GUIDE": { name: "Deployment Guide", category: "guide" },
-        "API DOCUMENTATION": { name: "API Specification", category: "reference" },
+        "API DOCUMENTATION": { name: "API Documentation", category: "reference" },
         ROADMAP: { name: "Roadmap", category: "info" },
         CHANGELOG: { name: "Changelog", category: "info" },
       };
@@ -98,7 +91,6 @@ export default async function PublicDocsPage({
     console.error("Error reading docs directory:", err);
   }
 
-  // Find the requested file
   const requestedFile = availableFiles.find((f) => f.slug === currentFileSlug) || availableFiles[0];
   const filePath = path.join(docsDir, requestedFile?.path || "README.md");
 
@@ -109,75 +101,55 @@ export default async function PublicDocsPage({
     version = `v${packageJson.version}`;
   } catch (err) {
     content = "# Error\n\nCould not load documentation file.";
-    console.error("Error loading docs:", err);
   }
 
-  // Nested TOC Generation
   const toc: TocSection[] = [];
   let currentSection: TocSection | null = null;
 
   content.split("\n").forEach((line) => {
     if (line.startsWith("## ")) {
-      // H2 - New Section
       const text = line.replace(/^## /, "").trim();
-      const id = text
-        .toLowerCase()
-        .replace(/[^\w]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-
-      // If we have a current section, push it to toc
-      if (currentSection) {
-        toc.push(currentSection);
-      }
-
-      currentSection = {
-        title: text,
-        id: id,
-        items: [],
-      };
+      const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+      if (currentSection) toc.push(currentSection);
+      currentSection = { title: text, id, items: [] };
     } else if (line.startsWith("### ") && currentSection) {
-      // H3 - Item in current section
       const text = line.replace(/^### /, "").trim();
-      const id = text
-        .toLowerCase()
-        .replace(/[^\w]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+      const id = text.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
       currentSection.items.push({ text, id });
     }
   });
-
-  // Push the last section if exists
-  if (currentSection) {
-    toc.push(currentSection);
-  }
+  if (currentSection) toc.push(currentSection);
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b bg-white shadow-sm/50">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-xl font-extrabold text-transparent">
-              NEXT-KVC
-            </span>
-            <span className="rounded-full border border-blue-200 bg-blue-100 px-2.5 py-0.5 text-xs font-semibold tracking-wide text-blue-700">
-              {version}
-            </span>
-          </div>
+    <div className="bg-background relative min-h-screen font-sans">
+      <div className="bg-mesh-gold fixed inset-0 -z-10 opacity-30" />
+
+      <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 px-4 backdrop-blur-md">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link
-              href="/swagger"
-              className="text-sm font-medium text-gray-500 transition-colors hover:text-blue-600"
-            >
-              Swagger UI
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              <Logo size={28} showText={true} />
             </Link>
+            <div className="bg-primary/10 text-primary border-primary/20 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-tight">
+              {version}
+            </div>
+          </div>
+
+          <nav className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-md transition-all hover:bg-slate-800 hover:shadow-lg"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               Dashboard
             </Link>
-          </div>
+            <div className="bg-border/60 h-4 w-px" />
+            <Link
+              href="https://github.com"
+              className="bg-foreground text-background rounded-lg px-3 py-1.5 text-xs font-semibold hover:opacity-90 transition-opacity"
+            >
+              GitHub
+            </Link>
+          </nav>
         </div>
       </header>
 

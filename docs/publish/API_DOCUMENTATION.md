@@ -6,7 +6,7 @@ All endpoints require one of the following authentication methods. Ensure you ha
 
 | Method | Header / Cookie | Example |
 | :--- | :--- | :--- |
-| **API Key** | `X-API-Key` (header) | `X-API-Key: nsk_your_key` |
+| **API Key** | `X-API-Key` (header) | `X-API-Key: kvcyour_key` |
 | **Session Cookie** | `next-auth.session-token` | Managed by Auth.js |
 
 ---
@@ -44,7 +44,7 @@ All endpoints require one of the following authentication methods. Ensure you ha
 *   **Response**: `User` object (ID, Name, Email, Role, Timestamps).
 
 ### `[POST] /api/user/api-key`
-**Purpose**: Generate or rotate a secure `nsk_` API key.
+**Purpose**: Generate or rotate a secure `kvc` API key.
 
 *   **Action**: Replaces any existing key.
 *   **Response**: The new plaintext API key (shown only once).

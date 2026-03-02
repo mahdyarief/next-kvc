@@ -43,7 +43,7 @@ The system is built to switch seamlessly between **SQLite** and **PostgreSQL**.
 ### 🛡️ Security & Audits
 - **Audit Compliance**: All sensitive operations are tracked via the **`AuditLog`** table with JSON diffing.
 - **Access Control**: Role-based permissions are enforced globally in `getAuthenticatedUser`.
-- **API Keys**: Authenticate programmatically via the `X-API-Key` header with your `nsk_` key.
+- **API Keys**: Authenticate programmatically via the `X-API-Key` header with your `kvc` key.
 
 ---
 

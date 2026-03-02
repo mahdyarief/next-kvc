@@ -12,6 +12,26 @@ export default function ApiDocsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Suppress legacy lifecycle warnings from swagger-ui-react in development/strict mode
+    if (process.env.NODE_ENV === "development") {
+      const originalError = console.error;
+      console.error = (...args: any[]) => {
+        const fullMessage = args.map(a => a?.toString() || "").join(" ").toLowerCase();
+        if (
+          fullMessage.includes("modelcollapse") ||
+          fullMessage.includes("unsafe_componentwillreceiveprops")
+        ) {
+          return;
+        }
+        originalError.apply(console, args);
+      };
+      return () => {
+        console.error = originalError;
+      };
+    }
+  }, []);
+
+  useEffect(() => {
     const isAuth = sessionStorage.getItem("swagger_auth") === "true";
     if (isAuth) {
       setAuthorized(true);

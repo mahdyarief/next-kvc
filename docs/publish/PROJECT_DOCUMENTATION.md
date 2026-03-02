@@ -42,7 +42,7 @@ The project supports seamless switching between **SQLite** (Local Dev) and **Pos
 
 ### 1. Robust Authentication (Auth.js v5)
 *   **RBAC (Role-Based Access Control)**: Tiered access for `SUPERADMIN`, `ADMIN`, and `USER`.
-*   **API Key Integration**: Support for `nsk_` prefixed keys for external service integrations.
+*   **API Key Integration**: Support for `kvc` prefixed keys for external service integrations.
 
 ### 2. The Result Pattern
 Every API endpoint follows a strict response structure to ensure front-end predictability:

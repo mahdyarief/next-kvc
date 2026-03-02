@@ -19,7 +19,7 @@
 
 ### 🛡️ Core Infrastructure
 - **Next.js 16 (App Router)**: Native React Server Components (RSC) and Server Actions.
-- **Advanced Auth (Auth.js v5)**: Secure session management with **RBAC** (Superadmin/Admin/User) and **API Key** (`nsk_`) support.
+- **Advanced Auth (Auth.js v5)**: Secure session management with **RBAC** (Superadmin/Admin/User) and **API Key** (`kvc`) support.
 - **Prisma 7 Excellence**: Modular schema architecture using the **Prisma Schema Folder** pattern for scalable data modeling.
 - **Universal Database**: Dynamic runtime switching between **PostgreSQL** and **SQLite** via `bun run db:config`.
 

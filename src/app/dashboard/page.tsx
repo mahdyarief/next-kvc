@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Bell, Users, LayoutDashboard, ShieldCheck } from "lucide-react";
+import { Bell, Users, LayoutDashboard, ShieldCheck, Activity } from "lucide-react";
 
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -26,33 +26,33 @@ export default async function DashboardPage() {
       title: "Total Users",
       value: userCount,
       icon: Users,
-      description: "Registered in system",
-      color: "text-blue-600",
-      bg: "bg-blue-50",
+      description: "Active system members",
+      color: "text-primary",
+      bg: "bg-primary/5",
     },
     {
       title: "Notifications",
       value: notificationCount,
       icon: Bell,
-      description: "Total alerts",
-      color: "text-emerald-600",
-      bg: "bg-emerald-50",
+      description: "Total delivered alerts",
+      color: "text-primary",
+      bg: "bg-primary/5",
     },
     {
       title: "Unread",
       value: unreadNotifications,
       icon: Bell,
-      description: "Pending action",
-      color: "text-amber-600",
-      bg: "bg-amber-50",
+      description: "Pending attention",
+      color: "text-amber-500",
+      bg: "bg-amber-500/5",
     },
     {
       title: "System Status",
-      value: 1, // Static placeholder for "Online"
-      icon: ShieldCheck,
-      description: "Secure & Online",
-      color: "text-indigo-600",
-      bg: "bg-indigo-50",
+      value: "Online",
+      icon: Activity,
+      description: "Healthy and operational",
+      color: "text-primary",
+      bg: "bg-primary/5",
     },
   ];
 
@@ -61,29 +61,31 @@ export default async function DashboardPage() {
       href: "/dashboard/notifications",
       label: "Send Alert",
       icon: Bell,
-      description: "Notify users",
+      description: "Create and broadcast a notification",
+      kbd: "N",
     },
     {
       href: "/dashboard/settings",
       label: "Settings",
       icon: ShieldCheck,
-      description: "System config",
+      description: "Configure application preferences",
+      kbd: ",",
     },
     {
       href: "/dashboard/users",
       label: "Manage Users",
       icon: Users,
-      description: "User directory",
+      description: "View and manage user accounts",
+      kbd: "U",
     },
     {
       href: "/dashboard",
       label: "Overview",
       icon: LayoutDashboard,
-      description: "Back to home",
+      description: "Return to the main dashboard",
+      kbd: "H",
     },
   ];
 
   return <DashboardView stats={stats} quickActions={quickActions} />;
-
 }
-

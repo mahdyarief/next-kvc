@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Switch } from "@/components/ui/switch";
 import { Bell, Send, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function NotificationAdminPage() {
   // Note: Server-side protection is also needed.
@@ -157,23 +158,30 @@ export default function NotificationAdminPage() {
         </Card>
 
         <div className="space-y-6">
-          <Card className="border-dashed bg-slate-50">
+          <Card className="border-dashed bg-muted/40">
             <CardHeader>
-              <CardTitle className="text-muted-foreground text-base">Preview</CardTitle>
+              <CardTitle className="text-muted-foreground font-heading text-sm font-semibold uppercase tracking-wider">Preview</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-start gap-3 rounded-lg border bg-white p-4 shadow-sm">
+              <div className="surface flex items-start gap-4 p-5 transition-all duration-300">
                 <div
-                  className={`rounded-full p-2 ${type === "WARNING" ? "bg-yellow-100 text-yellow-600" : type === "SUCCESS" ? "bg-green-100 text-green-600" : "bg-blue-100 text-blue-600"}`}
+                  className={cn(
+                    "flex-shrink-0 rounded-xl p-2.5 border border-primary/20 bg-primary/10 text-primary",
+                    type === "WARNING" && "border-amber-500/20 bg-amber-500/10 text-amber-500",
+                    type === "SUCCESS" && "border-emerald-500/20 bg-emerald-500/10 text-emerald-500",
+                  )}
                 >
                   <Bell className="h-5 w-5" />
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold">{title || "Notification Title"}</h4>
-                  <p className="text-muted-foreground mt-1 text-xs">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-heading text-sm font-semibold leading-none">{title || "Notification Title"}</h4>
+                  <p className="text-muted-foreground mt-2 line-clamp-2 text-xs leading-relaxed">
                     {message || "Notification message content will appear here."}
                   </p>
-                  <p className="mt-2 text-[10px] text-slate-400">Just now</p>
+                  <div className="mt-3 flex items-center justify-between">
+                    <p className="text-muted-foreground/40 text-[10px] font-medium uppercase tracking-widest">Just now</p>
+                    <div className="bg-primary/20 h-1.5 w-1.5 rounded-full animate-pulse" />
+                  </div>
                 </div>
               </div>
             </CardContent>

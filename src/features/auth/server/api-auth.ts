@@ -87,7 +87,7 @@ export function isAdmin(userRole: string): boolean {
  */
 export function generateApiKey(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "nsk_"; // Prefix for easy identification
+  let result = "kvc"; // Prefix for easy identification
   for (let i = 0; i < 32; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }

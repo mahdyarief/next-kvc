@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { ChevronDown, PanelLeftClose, PanelLeft } from "lucide-react";
+import { PanelLeftClose, PanelLeft } from "lucide-react";
 import {
   LayoutDashboard,
   Users,
@@ -16,6 +16,8 @@ import {
 
 import { useSidebar } from "./sidebar-context";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Kbd } from "@/components/ui/kbd";
+import { cn } from "@/lib/utils";
 
 interface NavGroup {
   label: string;
@@ -57,7 +59,6 @@ const navGroups: NavGroup[] = [
   },
 ];
 
-
 export function SidebarNav() {
   const pathname = usePathname();
   const { isCollapsed, toggleCollapse } = useSidebar();
@@ -65,15 +66,10 @@ export function SidebarNav() {
   const userRole = session?.user?.role;
 
   const [mounted, setMounted] = useState(false);
-  const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const toggleGroup = (label: string) => {
-    setCollapsedGroups((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
 
   const isActive = (href: string) => {
     if (href === "/dashboard") return pathname === "/dashboard";
@@ -84,64 +80,67 @@ export function SidebarNav() {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <nav className="custom-scrollbar flex-1 space-y-6 overflow-x-hidden overflow-y-auto px-3 py-4">
+      <nav className="space-y-4 overflow-x-hidden px-2 py-3">
         {navGroups.map((group) => {
           const visibleItems = group.items.filter(
             (item) => !item.superadminOnly || userRole === "SUPERADMIN"
           );
           if (visibleItems.length === 0) return null;
 
-          const isGroupCollapsed = collapsedGroups[group.label] ?? false;
-
           return (
-            <div key={group.label} className="space-y-1">
+            <div key={group.label} className="space-y-0.5">
+              {/* Group label — hidden when collapsed */}
               {!isCollapsed && (
-                <button
-                  onClick={() => toggleGroup(group.label)}
-                  className="text-muted-foreground/40 hover:text-primary group/header flex w-full items-center justify-between px-3 py-2 text-[10px] font-black tracking-[0.2em] uppercase transition-colors"
-                >
+                <p className="text-muted-foreground/40 mb-1 px-3 text-[10px] font-semibold tracking-widest uppercase">
                   {group.label}
-                  <ChevronDown
-                    size={12}
-                    className={`transition-all duration-300 group-hover/header:translate-y-0.5 ${isGroupCollapsed ? "-rotate-90" : ""}`}
-                  />
-                </button>
+                </p>
               )}
-
               {isCollapsed && (
-                <div className="border-sidebar-border/30 mx-2 mb-4 border-t opacity-50" />
+                <div className="border-sidebar-border/30 mx-2 mb-2 border-t" />
               )}
 
-              {(!isGroupCollapsed || isCollapsed) && (
-                <div className="space-y-1">
-                  {visibleItems.map((item) => (
-                    <NavLink
-                      key={item.href}
-                      item={item}
-                      active={isActive(item.href)}
-                      isCollapsed={isCollapsed}
-                    />
-                  ))}
-                </div>
-              )}
+              {visibleItems.map((item) => (
+                <NavLink
+                  key={item.href}
+                  item={item}
+                  active={isActive(item.href)}
+                  isCollapsed={isCollapsed}
+                />
+              ))}
             </div>
           );
         })}
       </nav>
 
-      <div
-        className={`border-sidebar-border/30 bg-sidebar/10 border-t p-3 transition-all duration-500 ${isCollapsed ? "px-2" : "px-4"}`}
-      >
-        <button
-          onClick={toggleCollapse}
-          className="text-muted-foreground hover:text-primary hover:bg-primary/5 group/collapse hover:border-primary/10 flex h-11 w-full items-center justify-center gap-3 overflow-hidden rounded-xl border border-transparent text-[11px] font-black tracking-widest uppercase transition-all duration-300"
-        >
-          <div className="relative">
-            {isCollapsed ? <PanelLeft size={18} /> : <PanelLeftClose size={18} />}
-            <div className="bg-primary/20 absolute inset-0 opacity-0 blur-md transition-opacity group-hover/collapse:opacity-100" />
-          </div>
-          {!isCollapsed && <span>Minimize View</span>}
-        </button>
+      {/* ── Collapse toggle ────────────────────────── */}
+      <div className={cn("border-sidebar-border/30 border-t px-2 py-2")}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={toggleCollapse}
+              className={cn(
+                "text-muted-foreground hover:text-foreground hover:bg-accent flex h-9 w-full items-center gap-2.5 rounded-lg px-3 text-[11px] font-medium transition-colors",
+                isCollapsed && "justify-center px-0"
+              )}
+            >
+              {isCollapsed ? (
+                <PanelLeft size={16} />
+              ) : (
+                <>
+                  <PanelLeftClose size={16} />
+                  <span className="flex-1 text-left">Collapse</span>
+                  <Kbd className="opacity-50">B</Kbd>
+                </>
+              )}
+            </button>
+          </TooltipTrigger>
+          {isCollapsed && (
+            <TooltipContent side="right" sideOffset={10} className="flex items-center gap-2">
+              <span>Expand sidebar</span>
+              <Kbd>B</Kbd>
+            </TooltipContent>
+          )}
+        </Tooltip>
       </div>
     </TooltipProvider>
   );
@@ -162,22 +161,27 @@ function NavLink({
     <Link
       href={item.href}
       target={item.external ? "_blank" : undefined}
-      className={`group relative flex items-center rounded-2xl text-sm font-bold transition-all duration-300 ${isCollapsed ? "mx-auto h-12 w-12 justify-center" : "gap-3.5 px-4 py-3"} ${active
-        ? "text-primary bg-primary/5 border-primary/10 border shadow-[0_0_20px_rgba(var(--primary-rgb),0.05)]"
-        : "text-muted-foreground/70 hover:bg-primary/[0.03] hover:text-foreground border border-transparent"
-        } `}
+      className={cn(
+        "group flex items-center rounded-lg text-sm transition-all duration-150",
+        isCollapsed ? "h-9 w-full justify-center" : "gap-2.5 px-3 py-2",
+        active
+          ? "bg-primary/10 text-primary font-medium"
+          : "text-muted-foreground/70 hover:bg-accent hover:text-foreground font-medium"
+      )}
     >
-      <div className="relative">
-        <Icon
-          size={isCollapsed ? 22 : 19}
-          className={`flex-shrink-0 transition-all duration-300 ${active ? "text-primary scale-110 drop-shadow-[0_0_8px_rgba(var(--primary-rgb),0.4)]" : "text-muted-foreground/60 group-hover:text-primary group-hover:scale-110"}`}
-        />
-      </div>
-
-      {!isCollapsed && <span className="flex-1 truncate tracking-tight">{item.label}</span>}
-
+      <Icon
+        size={16}
+        className={cn(
+          "flex-shrink-0 transition-colors",
+          active ? "text-primary" : "text-muted-foreground/60 group-hover:text-foreground"
+        )}
+      />
+      {!isCollapsed && (
+        <span className="flex-1 truncate">{item.label}</span>
+      )}
+      {/* Active dot indicator */}
       {active && !isCollapsed && (
-        <div className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full shadow-[0_0_8px_var(--primary)]" />
+        <div className="bg-primary h-1.5 w-1.5 flex-shrink-0 rounded-full" />
       )}
     </Link>
   );
@@ -188,10 +192,10 @@ function NavLink({
         <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
         <TooltipContent
           side="right"
-          sideOffset={12}
-          className="bg-foreground text-background rounded-lg border-none px-3 py-1.5 text-[10px] font-black tracking-widest uppercase shadow-xl"
+          sideOffset={10}
+          className="text-[11px] font-medium"
         >
-          <p>{item.label}</p>
+          {item.label}
         </TooltipContent>
       </Tooltip>
     );

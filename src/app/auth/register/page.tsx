@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { FloatingInput as Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import { ArrowRight, Loader2, Shield, Zap, Bell, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-
 import { Logo } from "@/components/brand/logo";
 
 const formSchema = z
@@ -30,6 +30,12 @@ const formSchema = z
       });
     }
   });
+
+const FEATURES = [
+  { icon: Shield, text: "Enterprise-grade security standards" },
+  { icon: Zap, text: "High-performance dashboard shell" },
+  { icon: Bell, text: "Real-time system notifications" },
+];
 
 export function DefaultRegisterPage() {
   const router = useRouter();
@@ -83,19 +89,17 @@ export function DefaultRegisterPage() {
 
   if (success) {
     return (
-      <div className="bg-background relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
-        <div className="bg-primary/20 pointer-events-none absolute top-0 left-0 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[120px]" />
-        <div className="glass-panel animate-in zoom-in shadow-primary/10 flex max-w-sm flex-col items-center rounded-[2.5rem] p-12 text-center shadow-2xl duration-500">
-          <div className="from-primary shadow-primary/30 mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br to-blue-600 shadow-xl">
-            <Logo size={40} />
+      <div className="bg-background flex min-h-screen flex-col items-center justify-center p-6 text-center">
+        <div className="bg-mesh-gold fixed inset-0 -z-10" />
+        <div className="animate-in zoom-in-95 flex flex-col items-center duration-500">
+          <div className="bg-primary/20 mb-8 flex h-20 w-20 items-center justify-center rounded-full ring-8 ring-primary/5">
+            <CheckCircle2 className="text-primary h-12 w-12" />
           </div>
-          <h2 className="text-foreground mb-3 text-3xl font-black tracking-tight italic">
-            Welcome Aboard!
+          <h2 className="font-heading mb-3 text-3xl font-bold tracking-tight">
+            Account Created!
           </h2>
-          <p className="text-muted-foreground font-medium">
-            Your NEXT-KVC workspace is ready.
-            <br />
-            Redirecting you shortly...
+          <p className="text-muted-foreground text-lg">
+            Welcome aboard. Redirecting you to login...
           </p>
         </div>
       </div>
@@ -103,31 +107,85 @@ export function DefaultRegisterPage() {
   }
 
   return (
-    <div className="bg-background relative flex min-h-screen items-center justify-center overflow-hidden py-16">
-      {/* Background Orbs - Premium Blue theme */}
-      <div className="bg-primary/10 animate-pulse-glow pointer-events-none absolute top-0 left-0 h-[50rem] w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[140px]" />
-      <div className="animate-pulse-glow pointer-events-none absolute right-0 bottom-0 h-[40rem] w-[40rem] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/10 blur-[120px] delay-1000" />
+    <div className="flex min-h-screen font-sans">
+      {/* ── Left panel — brand ─────────────────────────── */}
+      <div className="bg-foreground relative hidden w-[420px] flex-shrink-0 flex-col justify-between overflow-hidden p-10 lg:flex xl:w-[480px]">
+        {/* Gold mesh overlay */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 30% 20%, oklch(0.65 0.18 72 / 0.18) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 70% 80%, oklch(0.72 0.14 90 / 0.1) 0%, transparent 60%)",
+          }}
+        />
 
-      <div className="relative z-10 w-full max-w-md p-4">
-        <div className="animate-in fade-in slide-in-from-bottom-5 mb-10 flex flex-col items-center text-center duration-700">
-          <Logo size={64} className="hover-lift mb-6" />
-          <h1 className="text-foreground text-4xl font-black tracking-tight sm:text-5xl">
-            Create <span className="text-primary italic">Account</span>
-          </h1>
-          <p className="text-muted-foreground mt-3 text-lg font-medium">
-            Get started with your <span className="text-foreground">NEXT-KVC</span> workspace
-          </p>
+        {/* Top — Logo */}
+        <div className="relative z-10">
+          <Logo size={40} showText={false} />
         </div>
 
-        <div className="glass-panel shadow-3xl shadow-primary/5 animate-in fade-in zoom-in-95 rounded-[2rem] border-white/40 p-10 duration-1000 dark:border-white/5 dark:shadow-black/60">
+        {/* Mid — Brand statement */}
+        <div className="relative z-10 space-y-6">
+          <h2 className="font-heading text-3xl font-bold leading-tight text-white xl:text-4xl">
+            Start your journey with{" "}
+            <span className="text-gradient">Premium</span>{" "}
+            Infrastructure.
+          </h2>
+          <p className="text-white/50 text-sm leading-relaxed">
+            Join the elite community of developers building modern applications
+            with the best-in-class Next.js starter kit.
+          </p>
+          <ul className="space-y-3">
+            {FEATURES.map(({ icon: Icon, text }) => (
+              <li key={text} className="flex items-center gap-3 text-sm text-white/70">
+                <div className="bg-primary/20 border-primary/30 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border">
+                  <Icon className="text-primary h-3.5 w-3.5" />
+                </div>
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Bottom — Keyboard hint */}
+        <div className="relative z-10 flex items-center gap-2">
+          <span className="text-xs text-white/30">Registration is fast via</span>
+          <KbdGroup>
+            <Kbd className="border-white/20 bg-white/10 text-white/60 shadow-none">Web Forms</Kbd>
+          </KbdGroup>
+        </div>
+      </div>
+
+      {/* ── Right panel — form ─────────────────────────── */}
+      <div className="bg-background flex flex-1 flex-col items-center justify-center px-6 py-12">
+        <div className="bg-mesh-gold fixed inset-0 -z-10 opacity-40 lg:hidden" />
+
+        {/* Mobile logo */}
+        <div className="mb-8 lg:hidden">
+          <Logo size={40} showText={true} />
+        </div>
+
+        <div className="w-full max-w-sm">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="font-heading mb-2 text-2xl font-bold tracking-tight">
+              Create an account
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Enter your details to register your workspace
+            </p>
+          </div>
+
+          {/* Error state */}
           {error && (
-            <div className="bg-destructive/10 border-destructive/20 text-destructive animate-in shake mb-8 rounded-2xl border p-4 text-center text-sm font-semibold duration-500">
+            <div className="bg-destructive/10 border-destructive/20 text-destructive mb-6 rounded-lg border p-3 text-sm font-medium">
               {error}
             </div>
           )}
 
+          {/* Form */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="name"
@@ -153,78 +211,85 @@ export function DefaultRegisterPage() {
                   />
                 )}
               />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <PasswordInput
-                    {...field}
-                    label="Password"
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                  />
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <PasswordInput
-                    {...field}
-                    label="Confirm Password"
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                  />
-                )}
-              />
+              <div className="grid gap-4 sm:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <PasswordInput
+                      {...field}
+                      label="Password"
+                      placeholder="••••••••"
+                      autoComplete="new-password"
+                    />
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <PasswordInput
+                      {...field}
+                      label="Confirm"
+                      placeholder="••••••••"
+                      autoComplete="new-password"
+                    />
+                  )}
+                />
+              </div>
 
               <Button
                 type="submit"
                 size="lg"
-                className="shadow-primary/20 hover:shadow-primary/40 from-primary mt-6 h-14 w-full rounded-2xl bg-gradient-to-r to-blue-600 text-lg font-bold shadow-xl transition-all hover:-translate-y-0.5"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground mt-4 h-11 w-full rounded-lg font-semibold shadow-sm transition-all"
                 disabled={loading}
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-3 h-6 w-6 animate-spin" /> Finalizing
-                    Profile...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating account…
                   </>
                 ) : (
                   <>
-                    Create Workspace <ArrowRight className="ml-3 h-6 w-6" />
+                    Create Account
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </>
                 )}
               </Button>
             </form>
           </Form>
 
-          <div className="text-muted-foreground mt-8 text-center text-xs leading-relaxed font-medium">
-            By registering, you agree to our{" "}
-            <Link
-              href="/terms"
-              className="text-primary font-bold transition-all hover:underline"
-            >
+          {/* Legal / Social */}
+          <div className="mt-6 text-center text-xs text-muted-foreground">
+            By signing up, you agree to our{" "}
+            <Link href="/terms" className="text-primary hover:underline">
               Terms
             </Link>{" "}
             and{" "}
-            <Link
-              href="/privacy"
-              className="text-primary font-bold transition-all hover:underline"
-            >
+            <Link href="/privacy" className="text-primary hover:underline">
               Privacy Policy
             </Link>
             .
           </div>
-        </div>
 
-        <div className="text-muted-foreground animate-in fade-in mt-10 text-center text-base font-medium delay-500 duration-1000">
-          Already part of the community?{" "}
-          <Link
-            href="/auth/login"
-            className="text-primary decoration-primary/20 font-black tracking-tight underline underline-offset-4 transition-colors hover:text-blue-600 hover:decoration-blue-600/40"
-          >
-            Sign In Here
-          </Link>
+          {/* Footer links */}
+          <div className="mt-8 flex flex-col items-center gap-4 text-sm">
+            <p className="text-muted-foreground">
+              Already have an account?{" "}
+              <Link
+                href="/auth/login"
+                className="text-primary hover:text-primary/80 font-medium transition-colors"
+              >
+                Sign In
+              </Link>
+            </p>
+            <Link
+              href="/"
+              className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+            >
+              ← Back home
+            </Link>
+          </div>
         </div>
       </div>
     </div>
