@@ -9,23 +9,7 @@ export const metadata = {
   description: "Advanced Next.js + Prisma Dashboard Starter Documentation",
 };
 
-export interface TocItem {
-  text: string;
-  id: string;
-}
-
-export interface TocSection {
-  title: string;
-  id: string;
-  items: TocItem[];
-}
-
-export interface DocFile {
-  name: string;
-  slug: string;
-  path: string;
-  category: "reference" | "guide" | "info";
-}
+import { TocSection, DocFile } from "@/features/docs/types";
 
 export default async function PublicDocsPage({
   searchParams,
@@ -87,8 +71,8 @@ export default async function PublicDocsPage({
         category,
       };
     });
-  } catch (err) {
-    console.error("Error reading docs directory:", err);
+  } catch (_err) {
+    console.error("Error reading docs directory:", _err);
   }
 
   const requestedFile = availableFiles.find((f) => f.slug === currentFileSlug) || availableFiles[0];
@@ -99,7 +83,7 @@ export default async function PublicDocsPage({
     content = fs.readFileSync(filePath, "utf8");
     const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
     version = `v${packageJson.version}`;
-  } catch (err) {
+  } catch (_err) {
     content = "# Error\n\nCould not load documentation file.";
   }
 

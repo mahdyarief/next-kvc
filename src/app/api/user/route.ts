@@ -1,25 +1,24 @@
+import { NextRequest } from "next/server";
 import { getAuthenticatedUser } from "@/features/auth/server/api-auth";
 import { withErrorHandler } from "@/lib/api-handler";
 import { api } from "@/lib/api-response";
+import { UnauthorizedError } from "@/lib/errors";
+import { ProfileService } from "@/features/profile/services/profile.service";
 
-/**
- * [GET] /api/user
- * Returns the currently authenticated user's profile
- */
-export const GET = withErrorHandler(async (req) => {
+export const GET = withErrorHandler(async (req: NextRequest) => {
   const user = await getAuthenticatedUser(req);
+  if (!user) throw new UnauthorizedError();
 
-  if (!user) {
-    return api.error("Unauthorized", 401);
-  }
-
-  // Sanitize user object (e.g., exclude password if it were there)
-  const profile = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-  };
-
+  const profile = await ProfileService.getProfile(user.id);
   return api.success(profile);
+});
+
+export const PATCH = withErrorHandler(async (req: NextRequest) => {
+  const user = await getAuthenticatedUser(req);
+  if (!user) throw new UnauthorizedError();
+
+  const body = await req.json();
+  const updated = await ProfileService.updateProfile(user.id, body, req);
+
+  return api.success(updated, "Profile updated successfully");
 });

@@ -6,7 +6,6 @@ import {
   Shield,
   Globe,
   Bell,
-  Clock,
   Code,
   Sparkles,
   Database,
@@ -18,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import fs from "fs";
 import path from "path";
 import { Logo } from "@/components/brand/logo";
+import { SiteFooter } from "@/components/brand/site-footer";
 
 export const metadata = {
   title: "Next.js Starter | Premium Application Template",
@@ -298,41 +298,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ── Footer ───────────────────────────────────── */}
-      <footer className="border-t border-border/60 py-10">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-6">
-              <Logo size={32} showText={false} />
-              <div className="flex gap-5">
-                <Link href="#features" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-                  Features
-                </Link>
-                <Link href="/docs" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-                  Docs
-                </Link>
-                <Link href="/privacy" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-                  Privacy
-                </Link>
-                <Link href="/terms" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-                  Terms
-                </Link>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link
-                href="https://github.com/kelasvibecoding/next-kvc"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Github className="h-4 w-4" />
-              </Link>
-              <span className="text-muted-foreground text-xs">
-                © {new Date().getFullYear()} Next.js Starter
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

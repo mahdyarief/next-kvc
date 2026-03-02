@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, ShieldCheck, Scale } from "lucide-react";
+import { SiteFooter } from "@/components/brand/site-footer";
 
 export const metadata = {
   title: "Terms of Service | NEXT-KVC",
@@ -54,7 +55,7 @@ export default function TermsPage() {
             <ul>
               <li>
                 <strong>Your Data is Yours:</strong> We do not track, intercept, or sell your
-                WhatsApp messages, contact lists, or session data. Your information is secure and
+                user information, activity logs, or session data. Your information is secure and
                 not misused.
               </li>
               <li>
@@ -69,39 +70,37 @@ export default function TermsPage() {
 
             <h2 className="mt-8 border-b pb-2 text-2xl">2. Acceptable Use Policy</h2>
             <p>
-              When utilizing NEXT-KVC&apos;s API, auto-replies, and broadcasting capabilities, you agree
-              to abide by WhatsApp&apos;s official Terms of Service and Anti-Spam policies. You agree not
-              to:
+              When utilizing NEXT-KVC&apos;s features and API capabilities, you agree to abide by
+              fair use principles and applicable laws. You agree not to:
             </p>
             <ul>
-              <li>
-                Send unsolicited &quot;spam&quot; messages or bulk promotional campaigns to users who have not
-                explicitly opted-in.
-              </li>
               <li>
                 Use the platform to distribute malicious software, phishing links, or illegal
                 content.
               </li>
               <li>
-                Attempt to reverse-engineer the core API or overload the service with excessive
+                Attempt to reverse-engineer the core features or overload the system with excessive
                 requests.
+              </li>
+              <li>
+                Use the automated tools for activities that violate the policies of third-party
+                providers you integrate with.
               </li>
             </ul>
 
             <h2 className="mt-8 border-b pb-2 text-2xl">3. Account Integrity</h2>
             <p>
-              NEXT-KVC provides tools to manage multiple WhatsApp sessions. It is crucial to monitor
-              your active devices. If you suspect unauthorized access to your gateway dashboard,
-              immediately change your password and revoke any connected WhatsApp sessions from your
-              physical device.
+              NEXT-KVC provides tools to manage your application workspace. It is crucial to monitor
+              access to your dashboard. If you suspect unauthorized access, immediately change your
+              password and review your activity logs.
             </p>
 
             <h2 className="mt-8 border-b pb-2 text-2xl">4. Disclaimers and Limitations</h2>
             <p>
-              NEXT-KVC is provided &quot;as is&quot; and without warranties of any kind. We utilize third-party
-              libraries (such as Baileys) to connect to WhatsApp web protocols. Changes to
-              WhatsApp&apos;s internal systems may occasionally disrupt service. We are not liable for
-              any account suspensions or bans imposed by WhatsApp as a result of your usage.
+              NEXT-KVC is provided &quot;as is&quot; and without warranties of any kind. We utilize
+              modern web standards and reliable third-party libraries. However, we are not liable for
+              any service disruptions or data loss resulting from improper configuration, third-party
+              provider changes, or server failures.
             </p>
 
             <div className="bg-primary/5 border-primary/10 mt-12 rounded-2xl border p-6">
@@ -114,6 +113,8 @@ export default function TermsPage() {
           </div>
         </div>
       </div>
+      <SiteFooter className="mt-12" />
     </div>
   );
 }
+

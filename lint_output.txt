@@ -1,0 +1,13 @@
+
+D:\Github\next-kvc\src\features\notifications\components\notification-live-preview.tsx
+  6:5  warning  'ChevronRight' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+D:\Github\next-kvc\src\features\notifications\services\notification.service.ts
+  39:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Github\next-kvc\src\features\profile\components\profile-form.tsx
+  16:10  warning  'cn' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+✖ 4 problems (0 errors, 4 warnings)
+

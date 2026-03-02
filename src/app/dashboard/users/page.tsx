@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -13,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Trash2, Plus, Edit, User, ShieldAlert, ShieldCheck } from "lucide-react";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import {
@@ -27,16 +26,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-interface UserProfile {
-  id: string;
-  name: string | null;
-  email: string;
-  role: "SUPERADMIN" | "OWNER" | "STAFF";
-  createdAt: string;
-  _count?: {
-    sessions: number;
-  };
-}
+import { DataTable } from "@/features/users/components/data-table";
+import { getColumns } from "@/features/users/components/columns";
+import { UserProfile } from "@/features/users/types";
 
 export default function UsersPage() {
   useSession(); // Make sure session is initialized/checked
@@ -59,11 +51,22 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("/api/users");
-      if (res.ok) {
-        const result = await res.json();
-        setUsers(result.data || []);
-      } else if (res.status === 403) {
+      const [usersRes, onlineRes] = await Promise.all([
+        fetch("/api/users"),
+        fetch("/api/users/online")
+      ]);
+
+      if (usersRes.ok) {
+        const usersResult = await usersRes.json();
+        const onlineIds = onlineRes.ok ? (await onlineRes.json()).data : [];
+
+        const mergedUsers = (usersResult.data || []).map((user: UserProfile) => ({
+          ...user,
+          status: onlineIds.includes(user.id) ? "online" : "offline"
+        }));
+
+        setUsers(mergedUsers);
+      } else if (usersRes.status === 403) {
         toast.error("Unauthorized. Only Super Admin can view users.");
       }
     } catch (error) {
@@ -126,18 +129,6 @@ export default function UsersPage() {
     }
   };
 
-  const getRoleIcon = (role: string) => {
-    switch (role) {
-      case "SUPERADMIN":
-        return <ShieldAlert className="h-4 w-4 text-red-500" />;
-      case "ADMIN":
-        return <ShieldCheck className="h-4 w-4 text-blue-500" />;
-      case "CUSTOMER":
-        return <ShieldCheck className="h-4 w-4 text-emerald-500" />;
-      default:
-        return <User className="h-4 w-4 text-muted-foreground" />;
-    }
-  };
 
   if (loading) return <div className="text-muted-foreground p-8 text-center">Loading...</div>;
 
@@ -212,6 +203,7 @@ export default function UsersPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="SUPERADMIN">Super Admin</SelectItem>
+                      <SelectItem value="OWNER">Owner</SelectItem>
                       <SelectItem value="ADMIN">Admin</SelectItem>
                       <SelectItem value="STAFF">Staff</SelectItem>
                       <SelectItem value="CUSTOMER">Customer</SelectItem>
@@ -231,62 +223,24 @@ export default function UsersPage() {
       )}
 
       {/* Users Table */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {users.map((user) => (
-          <Card key={user.id} className="overflow-hidden">
-            <CardContent className="p-0">
-              <div className="p-6">
-                <div className="mb-4 flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 font-heading text-lg font-bold text-primary border border-primary/20">
-                      {user.name?.charAt(0) || user.email.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">{user.name || "User"}</h3>
-                      <p className="text-muted-foreground text-xs">{user.email}</p>
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="flex items-center gap-1">
-                    {getRoleIcon(user.role)}
-                    {user.role}
-                  </Badge>
-                </div>
-
-                <div className="text-muted-foreground flex items-center justify-between text-sm">
-                  <span>{user._count?.sessions || 0} Sessions</span>
-                  <span>Joined {new Date(user.createdAt).toLocaleDateString()}</span>
-                </div>
-              </div>
-              <div className="flex justify-end gap-2 border-t border-border/40 bg-muted/30 p-3">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => {
-                    setEditingUser(user);
-                    setFormData({
-                      name: user.name || "",
-                      email: user.email,
-                      password: "",
-                      role: user.role,
-                    });
-                    setShowForm(true);
-                  }}
-                >
-                  <Edit className="mr-1 h-4 w-4" /> Edit
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => handleDelete(user.id)}
-                >
-                  <Trash2 className="mr-1 h-4 w-4" /> Delete
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <DataTable
+        columns={getColumns({
+          onEdit: (user) => {
+            setEditingUser(user);
+            setFormData({
+              name: user.name || "",
+              email: user.email,
+              password: "",
+              role: user.role,
+            });
+            setShowForm(true);
+          },
+          onDelete: (id) => handleDelete(id),
+        })}
+        data={users}
+        searchKey="name"
+        searchPlaceholder="Search by name or email..."
+      />
       {/* Confirmation Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
         <AlertDialogContent>

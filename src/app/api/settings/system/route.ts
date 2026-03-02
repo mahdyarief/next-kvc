@@ -1,16 +1,13 @@
 import { NextRequest } from "next/server";
-import { prisma } from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/features/auth/server/api-auth";
 import { withErrorHandler } from "@/lib/api-handler";
 import { api } from "@/lib/api-response";
 import { ForbiddenError } from "@/lib/errors";
+import { SettingsService } from "@/features/settings/services/settings.service";
 
 export const GET = withErrorHandler(async () => {
-  const config = await prisma.systemConfig.findUnique({
-    where: { id: "default" },
-  });
-
-  return api.success(config || { appName: "NEXT-KVC" });
+  const config = await SettingsService.getConfig();
+  return api.success(config);
 });
 
 export const POST = withErrorHandler(async (req: NextRequest) => {
@@ -20,20 +17,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
   }
 
   const body = await req.json();
-  const { appName, logoUrl, timezone, enableRegistration } = body;
-
-  const config = await prisma.systemConfig.upsert({
-    where: { id: "default" },
-    update: { appName, logoUrl, timezone, enableRegistration: enableRegistration ?? true },
-    create: {
-      id: "default",
-      appName,
-      logoUrl: logoUrl || "",
-      timezone: timezone || "Asia/Jakarta",
-      enableRegistration: enableRegistration ?? true,
-    },
-  });
+  const config = await SettingsService.updateConfig(body, req);
 
   return api.success(config, "System configuration updated");
 });
-

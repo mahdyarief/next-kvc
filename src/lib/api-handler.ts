@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { AppError } from "./errors";
 import { api } from "./api-response";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ApiHandler = (req: NextRequest, ...args: any[]) => Promise<NextResponse | Response>;
 
 export function withErrorHandler(handler: ApiHandler) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return async (req: NextRequest, ...args: any[]) => {
     try {
       return await handler(req, ...args);

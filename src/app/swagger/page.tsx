@@ -15,7 +15,7 @@ export default function ApiDocsPage() {
     // Suppress legacy lifecycle warnings from swagger-ui-react in development/strict mode
     if (process.env.NODE_ENV === "development") {
       const originalError = console.error;
-      console.error = (...args: any[]) => {
+      console.error = (...args: unknown[]) => {
         const fullMessage = args.map(a => a?.toString() || "").join(" ").toLowerCase();
         if (
           fullMessage.includes("modelcollapse") ||

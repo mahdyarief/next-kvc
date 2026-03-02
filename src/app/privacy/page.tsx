@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Lock, Shield } from "lucide-react";
+import { SiteFooter } from "@/components/brand/site-footer";
 
 export const metadata = {
   title: "Privacy Policy | NEXT-KVC",
@@ -41,7 +42,7 @@ export default function PrivacyPage() {
             <p className="lead text-muted-foreground mb-8 text-lg">
               At NEXT-KVC, we believe that your data is your property. This Privacy Policy details
               the strict boundaries regarding how information is handled when using our open-source,
-              self-hosted Application Template.
+              self-hosted Dashboard Template.
             </p>
 
             <h2 className="mt-8 flex items-center gap-2 border-b pb-2 text-2xl">
@@ -55,32 +56,30 @@ export default function PrivacyPage() {
             <ul>
               <li>
                 <strong>No Centralized Telemetry:</strong> The creators of NEXT-KVC do not receive
-                telemetry, analytics, or usage reports about your WhatsApp interactions.
+                telemetry, analytics, or usage reports about your private dashboard data.
               </li>
               <li>
-                <strong>Absolute Data Ownership:</strong> Your contacts, messages, schedules, and
-                auto-replies remain in your own database. We cannot and will not access it.
+                <strong>Absolute Data Ownership:</strong> Your user data, activity logs, and system
+                configurations remain in your own database. We cannot and will not access it.
               </li>
             </ul>
 
             <h2 className="mt-8 border-b pb-2 text-2xl">2. Data We Process Locally</h2>
             <p>
-              When you deploy the gateway, the application running on your server interacts with:
+              When you deploy the template, the application running on your server interacts with:
             </p>
             <ul>
               <li>
                 <strong>Authentication Credentials:</strong> Passwords you create for the dashboard
-                are securely hashed using bcrypt before being stored in your local database.
+                are securely hashed using Argon2 or bcrypt before being stored in your local database.
               </li>
               <li>
-                <strong>WhatsApp Sessions:</strong> NEXT-KVC acts as a bridge to WhatsApp Web. The
-                session tokens (keys) necessary to maintain this connection are stored locally on
-                your server.
+                <strong>User Profiles:</strong> Information such as names and emails used for
+                account management are stored strictly within your environment.
               </li>
               <li>
-                <strong>Communication Logs:</strong> Messages sent and received via the gateway are
-                logged within your local database to provide you with historical data and webhook
-                functionality.
+                <strong>Application Logs:</strong> Audit trails and technical logs are generated locally
+                to assist you in monitoring system health and security.
               </li>
             </ul>
 
@@ -96,16 +95,15 @@ export default function PrivacyPage() {
               </li>
               <li>Securing the host server with firewalls and SSH key authentication.</li>
               <li>
-                Keeping the underlying operating system and Node.js environment constantly updated.
+                Keeping the underlying operating system and database environment constantly updated.
               </li>
             </ul>
 
             <h2 className="mt-8 border-b pb-2 text-2xl">4. Third-Party Integrations</h2>
             <p>
-              NEXT-KVC utilizes the <code>@whiskeysockets/baileys</code> library to communicate
-              directly with WhatsApp&apos;s servers. By using this gateway, your server will establish a
-              direct web-socket connection to WhatsApp. Please be aware that your use of WhatsApp is
-              still subject to Meta&apos;s Privacy Policy.
+              NEXT-KVC may integrate with external services (such as Vercel Blob, UploadThing, or
+              external SMTPS) depending on your configuration. When these services are enabled,
+              their respective privacy policies will apply to the data transmitted to them.
             </p>
 
             <div className="mt-12 rounded-2xl border border-blue-500/10 bg-blue-500/5 p-6">
@@ -119,6 +117,8 @@ export default function PrivacyPage() {
           </div>
         </div>
       </div>
+      <SiteFooter className="mt-12" />
     </div>
   );
 }
+

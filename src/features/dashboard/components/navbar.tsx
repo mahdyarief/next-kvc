@@ -7,13 +7,14 @@ import { RealtimeClock } from "@/features/dashboard/components/realtime-clock";
 import { ThemeToggle } from "@/features/dashboard/components/theme-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Kbd } from "@/components/ui/kbd";
-import { Bell, Inbox, Trash2, ChevronRight } from "lucide-react";
+import { Bell, Inbox, Trash2, ChevronRight, Search } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { io } from "socket.io-client";
 import { cn } from "@/lib/utils";
+import { SearchCommand } from "./search-command";
 
 interface NavbarProps {
   appName?: string;
@@ -37,6 +38,7 @@ export function Navbar({ appName }: NavbarProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -151,7 +153,7 @@ export function Navbar({ appName }: NavbarProps) {
         {/* Simplified Breadcrumbs */}
         <nav className="hidden items-center gap-1.5 text-sm font-medium sm:flex">
           {segments.map((segment, i) => (
-            <div key={segment} className="flex items-center gap-1.5 capitalize">
+            <div key={`${segment}-${i}`} className="flex items-center gap-1.5 capitalize">
               {i > 0 && <ChevronRight className="text-muted-foreground/40 h-3.5 w-3.5" />}
               <span className={cn(
                 i === segments.length - 1 ? "text-foreground" : "text-muted-foreground/60"
@@ -168,7 +170,23 @@ export function Navbar({ appName }: NavbarProps) {
           <RealtimeClock />
           <div className="bg-border/60 h-4 w-px" />
         </div>
+
+        <Button
+          variant="outline"
+          size="sm"
+          className="relative h-9 w-full justify-start rounded-xl border-border/20 bg-background/50 px-3 text-sm font-normal text-muted-foreground transition-all hover:border-primary/30 hover:bg-accent/50 sm:pr-12 md:w-40 lg:w-64"
+          onClick={() => setSearchOpen(true)}
+        >
+          <Search className="mr-2 h-4 w-4 shrink-0" />
+          <span className="hidden lg:inline-flex">Search dashboard...</span>
+          <span className="inline-flex lg:hidden">Search...</span>
+          <Kbd className="bg-muted-foreground/10 pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+            <span className="text-xs font-sans">⌘</span>K
+          </Kbd>
+        </Button>
+
         <ThemeToggle />
+        <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
 
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
@@ -226,9 +244,9 @@ export function Navbar({ appName }: NavbarProps) {
                 </div>
               ) : (
                 <div className="divide-y divide-border/40">
-                  {notifications.map((n) => (
+                  {notifications.map((n, i) => (
                     <div
-                      key={n.id}
+                      key={n.id || `notif-${i}`}
                       className={cn(
                         "group relative flex items-start gap-3 p-4 transition-colors hover:bg-accent/50",
                         !n.read && "bg-primary/[0.03]"

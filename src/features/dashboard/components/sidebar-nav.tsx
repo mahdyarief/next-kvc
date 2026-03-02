@@ -12,6 +12,7 @@ import {
   Bell,
   FileText,
   Code,
+  User,
 } from "lucide-react";
 
 import { useSidebar } from "./sidebar-context";
@@ -35,7 +36,10 @@ interface NavItem {
 const navGroups: NavGroup[] = [
   {
     label: "Main",
-    items: [{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard }],
+    items: [
+      { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { href: "/dashboard/profile", label: "My Profile", icon: User },
+    ],
   },
   {
     label: "Administration",

@@ -21,6 +21,9 @@ export default async function DashboardPage() {
     where: { userId: session.user.id, read: false }
   });
 
+  const io = (globalThis as unknown as { io: { getOnlineUsers?: () => string[] } }).io;
+  const onlineCount = io?.getOnlineUsers?.().length || 1; // Default to 1 (current user) if not initialized
+
   const stats = [
     {
       title: "Total Users",
@@ -47,12 +50,12 @@ export default async function DashboardPage() {
       bg: "bg-amber-500/5",
     },
     {
-      title: "System Status",
-      value: "Online",
+      title: "Live Now",
+      value: `${onlineCount} Online`,
       icon: Activity,
-      description: "Healthy and operational",
-      color: "text-primary",
-      bg: "bg-primary/5",
+      description: "Currently active sessions",
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/5",
     },
   ];
 
@@ -87,5 +90,5 @@ export default async function DashboardPage() {
     },
   ];
 
-  return <DashboardView stats={stats} quickActions={quickActions} />;
+  return <DashboardView stats={stats} quickActions={quickActions} userName={session.user.name ?? "User"} />;
 }
