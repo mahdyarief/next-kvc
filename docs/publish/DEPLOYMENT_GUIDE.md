@@ -96,8 +96,7 @@ In your Vercel Project Settings, navigate to **"Environment Variables"** and add
 | `BASE_URL` | Your production URL (e.g., `https://my-dashboard.vercel.app`) |
 | `STORAGE_PROVIDER` | `vercel-blob` or `uploadthing` |
 | `BLOB_READ_WRITE_TOKEN` | (Automatically added by Vercel Blob) |
-| `UPLOADTHING_SECRET` | (From UploadThing Dashboard) |
-| `UPLOADTHING_APP_ID` | (From UploadThing Dashboard) |
+| `UPLOADTHING_TOKEN` | (From UploadThing Dashboard - v7+) |
 | `NEXT_PUBLIC_APP_NAME` | `NEXT-KVC` |
 
 ---

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getAuthenticatedUser, isAdmin } from "@/features/auth/server/api-auth";
+import { getAuthenticatedUser } from "@/features/auth/server/api-auth";
 import { withErrorHandler } from "@/lib/api-handler";
 import { api } from "@/lib/api-response";
 import { ForbiddenError } from "@/lib/errors";

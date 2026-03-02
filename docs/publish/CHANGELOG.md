@@ -4,14 +4,6 @@ All notable changes to **NEXT-KVC** will be documented in this file. This projec
 
 ---
 
-## [1.1.0] - 2026-03-02
-### 🚀 Optimized
-- **Infrastructure Cleanup**: Removed all Tauri v2 legacy code, inclusive of `src-tauri`, build scripts, and desktop-specific dependencies.
-- **Documentation Overhaul**: Reorganized the `docs/publish` directory into a premium, easy-to-read knowledge base.
-- **Agentic Refinement**: Updated `.agent` rules and skills to focus strictly on Web excellence and FBA architecture.
-
----
-
 ## [1.0.0] - 2026-03-01
 ### 🌟 Added
 - **Core Architecture**:
@@ -35,9 +27,15 @@ All notable changes to **NEXT-KVC** will be documented in this file. This projec
 
 ### 🔄 Changed
 - **Project Identity**: Refactored from a specialized gateway to a generic, high-performance **Next.js Dashboard Starter**.
+- **API Alignment**: Updated storage API to respect `MAX_UPLOAD_SIZE_MB` environment variable.
+- **Improved Type Safety**: Refined `withErrorHandler` utility to better support Next.js dynamic route signatures.
 
+
+### 🚀 Optimized
+- **Documentation Overhaul**: Reorganized the `docs/publish` directory into a premium, easy-to-read knowledge base.
+- **Agentic Refinement**: Updated `.agent` rules and skills to focus strictly on Web excellence and FBA architecture.
 ---
 
 <div align="center">
-  **Document Status**: History | **Current Version**: 1.1.0
+  **Document Status**: History | **Current Version**: 1.3.0
 </div>

@@ -44,7 +44,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     await prisma.notification.createMany({ data: notifications });
 
     // Emit Socket.IO event for each user
-    const io = (globalThis as any).io;
+    const io = (globalThis as unknown as { io: { to: (room: string) => { emit: (event: string, data: unknown) => void } } }).io;
     if (io) {
       allUsers.forEach((u: { id: string }) => {
         io.to(`user:${u.id}`).emit("notification:new", {
@@ -73,7 +73,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     });
 
     // Emit Socket.IO event
-    const io = (globalThis as any).io;
+    const io = (globalThis as unknown as { io: { to: (room: string) => { emit: (event: string, data: unknown) => void } } }).io;
     if (io) {
       io.to(`user:${targetUserId}`).emit("notification:new", {
         id: notification.id,

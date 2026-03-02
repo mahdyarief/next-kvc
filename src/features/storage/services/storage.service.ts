@@ -35,9 +35,15 @@ export class StorageService {
     }
 
     if (this.provider === "uploadthing") {
-      const fileToUpload = file instanceof Buffer 
-        ? new File([file], filename, { type: options.contentType }) 
-        : file;
+      let fileToUpload: File;
+      
+      if (file instanceof File) {
+        fileToUpload = file;
+      } else {
+        // cast to any to satisfy Blob constructor which expects BlobPart
+        const blobPart = file as unknown as BlobPart;
+        fileToUpload = new File([blobPart], filename, { type: options.contentType });
+      }
       
       const response = await utapi.uploadFiles(fileToUpload);
       

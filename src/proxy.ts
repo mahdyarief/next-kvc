@@ -45,7 +45,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // Prevent CUSTOMER from accessing dashboard
-  if (isDashboardRoute && isLoggedIn && session?.user && (session.user as any).role === "CUSTOMER") {
+  if (isDashboardRoute && isLoggedIn && session?.user && (session.user as { role?: string }).role === "CUSTOMER") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 

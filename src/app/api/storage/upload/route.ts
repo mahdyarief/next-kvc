@@ -38,10 +38,12 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     throw new ValidationError("No file provided");
   }
 
-  // Basic security: Limit file size (e.g., 5MB)
-  const maxSize = 5 * 1024 * 1024;
+  // File size validation from environment variable
+  const maxUploadSizeMb = parseInt(process.env.MAX_UPLOAD_SIZE_MB || "5", 10);
+  const maxSize = maxUploadSizeMb * 1024 * 1024;
+  
   if (file.size > maxSize) {
-    throw new ValidationError("File size exceeds 5MB limit");
+    throw new ValidationError(`File size exceeds ${maxUploadSizeMb}MB limit`);
   }
 
   const result = await StorageService.upload(file.name, file, {

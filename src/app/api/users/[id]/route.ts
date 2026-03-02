@@ -43,7 +43,7 @@ export const PATCH = withErrorHandler(async (request: NextRequest, { params }: {
     return api.success(updatedUser, "User updated successfully");
   } catch (error) {
     // If user not found
-    if ((error as any).code === 'P2025') {
+    if ((error as { code?: string }).code === 'P2025') {
       throw new NotFoundError("User not found");
     }
     throw error;
@@ -72,7 +72,7 @@ export const DELETE = withErrorHandler(async (
     return api.success(null, "User deleted successfully");
   } catch (error) {
     // If user not found
-    if ((error as any).code === 'P2025') {
+    if ((error as { code?: string }).code === 'P2025') {
       throw new NotFoundError("User not found");
     }
     throw error;

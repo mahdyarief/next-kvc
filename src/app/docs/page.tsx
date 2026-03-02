@@ -36,6 +36,7 @@ export default async function PublicDocsPage({
   const DOC_ORDER = [
     "README.md",
     "ENVIRONMENT_VARIABLES.md",
+    "ROADMAP.md",
     "PROJECT_DOCUMENTATION.md",
     "AGENTIC_FRAMEWORK.md",
     "FEATURE_IMPLEMENTATION_JOURNEY.md",
@@ -76,6 +77,7 @@ export default async function PublicDocsPage({
         "FEATURE IMPLEMENTATION JOURNEY": { name: "Feature Journey", category: "guide" },
         "DEPLOYMENT GUIDE": { name: "Deployment Guide", category: "guide" },
         "API DOCUMENTATION": { name: "API Specification", category: "reference" },
+        ROADMAP: { name: "Roadmap", category: "info" },
         CHANGELOG: { name: "Changelog", category: "info" },
       };
 

@@ -1,6 +1,6 @@
 # 🔐 Environment Variables Guide
 
-This document provides a comprehensive reference for all configuration options in **NEXT-KVC** (Next Dashboard Starter).
+This document provides a comprehensive reference for the core configuration options in **NEXT-KVC**.
 
 > [!WARNING]
 > Never commit your `.env` file to version control (Git). It contains sensitive credentials that could compromise your system.
@@ -36,22 +36,14 @@ The base URL where your application is hosted. Essential for internal routing an
 - **Dev**: `http://localhost:3000`
 - **Prod**: `https://dashboard.example.com`
 
-### `NEXTAUTH_URL`
-Automatically derived from `BASE_URL`, but can be set manually. Required for Auth.js callback redirects.
-
-### `AUTH_TRUST_HOST`
-Set to `true` if your application is sitting behind a reverse-proxy (Nginx, Cloudflare, etc.).
-
 ---
 
 ## 🚀 Application Parameters
 
 | Variable     | Default | Description                                             |
 | :----------- | :------ | :------------------------------------------------------ |
-| `NODE_ENV`   | `dev`   | App environment (`development`, `production`, `test`). |
 | `PORT`       | `3000`  | Port for the web server and Socket.IO listener.        |
 | `TZ`         | `UTC`   | Default system timezone (e.g., `Asia/Jakarta`).         |
-| `APP_NAME`   | `NEXT-KVC` | Application display name.                              |
 
 ---
 
@@ -60,17 +52,9 @@ Set to `true` if your application is sitting behind a reverse-proxy (Nginx, Clou
 | Variable | Default | Description |
 | :------- | :------ | :---------- |
 | `STORAGE_PROVIDER` | `local` | `local`, `vercel-blob`, or `uploadthing`. |
-| `BLOB_READ_WRITE_TOKEN` | - | (Vercel Blob Only) Required token for API interaction. |
-| `UPLOADTHING_SECRET` | - | (UploadThing Only) Your private API key. |
-| `UPLOADTHING_APP_ID` | - | (UploadThing Only) Your application identifier. |
-
----
-
-## 🔌 Flags & Integrations
-
-- **`ENABLE_NOTIFICATIONS`**: Set to `false` to silence system-wide UI alerts.
-- **`ENABLE_AUTO_UPDATE_CHECK`**: Periodically checks for new version releases on GitHub.
-- **`ENABLE_RATE_LIMITING`**: Protects API endpoints from brute-force/spam.
+| `MAX_UPLOAD_SIZE_MB` | `5` | Maximum allowed file upload size. |
+| `BLOB_READ_WRITE_TOKEN` | - | (Vercel Blob Only) Token for @vercel/blob. |
+| `UPLOADTHING_TOKEN` | - | (UploadThing Only) Auth token for UploadThing. |
 
 ---
 
@@ -78,23 +62,20 @@ Set to `true` if your application is sitting behind a reverse-proxy (Nginx, Clou
 
 | Variable                       | Default    | Description                      |
 | :----------------------------- | :--------- | :------------------------------- |
-| `NEXT_PUBLIC_SWAGGER_ENABLED`  | `true`     | Enable/disable the `/swagger` page. |
 | `NEXT_PUBLIC_SWAGGER_USERNAME` | `admin`    | Username for Swagger UI auth.    |
 | `NEXT_PUBLIC_SWAGGER_PASSWORD` | `admin123` | Password for Swagger UI auth.    |
 
 ---
 
-## 📝 Example Configuration (Copy-Paste Template)
+## 📝 Example Configuration
 
 ```env
 # Essential Setup
-NODE_ENV="production"
 BASE_URL="https://dashboard.example.com"
 DATABASE_URL="postgresql://user:pass@db-host:5432/db?schema=public"
 
 # Security
 AUTH_SECRET="your-high-entropy-secret"
-AUTH_TRUST_HOST="true"
 
 # Localization
 TZ="Asia/Jakarta"
@@ -103,5 +84,5 @@ TZ="Asia/Jakarta"
 ---
 
 <div align="center">
-  **Document Status**: Critical | **Framework Version**: 1.1.0
+  **Document Status**: Cleaned | **Framework Version**: 1.3.0
 </div>
