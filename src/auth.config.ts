@@ -11,10 +11,10 @@ export const authConfig = {
 
       if (isOnDashboard) {
         if (isLoggedIn) {
-          // Prevent CUSTOMER from accessing dashboard
-          if ((auth.user as { role?: string }).role === "CUSTOMER") {
-            return Response.redirect(new URL("/", nextUrl));
-          }
+          // // Prevent CUSTOMER from accessing dashboard
+          // if ((auth.user as { role?: string }).role === "CUSTOMER") {
+          //   return Response.redirect(new URL("/", nextUrl));
+          // }
           return true;
         }
         return false; // Redirect unauthenticated users to login page

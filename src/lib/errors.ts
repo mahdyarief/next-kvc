@@ -34,3 +34,9 @@ export class ValidationError extends AppError {
     super(message, 400);
   }
 }
+
+export class ConflictError extends AppError {
+  constructor(message: string = "Resource Already Exists") {
+    super(message, 409);
+  }
+}

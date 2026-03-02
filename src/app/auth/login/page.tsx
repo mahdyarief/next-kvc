@@ -63,13 +63,13 @@ function LoginForm() {
   return (
     <div className="flex min-h-screen">
       {/* ── Left panel — brand ─────────────────────────── */}
-      <div className="bg-foreground relative hidden w-[420px] flex-shrink-0 flex-col justify-between overflow-hidden p-10 lg:flex xl:w-[480px]">
-        {/* Gold mesh overlay */}
+      <div className="bg-zinc-950 relative hidden w-[420px] flex-shrink-0 flex-col justify-between overflow-hidden p-10 lg:flex xl:w-[480px]">
+        {/* Obsidian Gold mesh overlay — Premium Depth */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 60% at 30% 20%, oklch(0.65 0.18 72 / 0.18) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 70% 80%, oklch(0.72 0.14 90 / 0.1) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 60% at 30% 20%, oklch(0.78 0.15 82 / 0.12) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 70% 80%, oklch(0.65 0.18 260 / 0.08) 0%, transparent 60%)",
           }}
         />
         {/* Top — Logo */}
@@ -81,7 +81,7 @@ function LoginForm() {
         <div className="relative z-10 space-y-6">
           <h2 className="font-heading text-3xl font-bold leading-tight text-white xl:text-4xl">
             Your premium{" "}
-            <span className="text-gradient">Next.js</span>{" "}
+            <span className="bg-gradient-to-br from-white to-white/60 bg-clip-text text-transparent">Next.js</span>{" "}
             dashboard starter.
           </h2>
           <p className="text-white/50 text-sm leading-relaxed">

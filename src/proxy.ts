@@ -45,10 +45,10 @@ export async function proxy(request: NextRequest) {
     );
   }
 
-  // Prevent CUSTOMER from accessing dashboard
-  if (isDashboardRoute && isLoggedIn && session?.user && (session.user as { role?: string }).role === "CUSTOMER") {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  // // Prevent CUSTOMER from accessing dashboard
+  // if (isDashboardRoute && isLoggedIn && session?.user && (session.user as { role?: string }).role === "CUSTOMER") {
+  //   return NextResponse.redirect(new URL("/", request.url));
+  // }
 
   // Redirect logged-in users away from auth pages (optional but standard)
   if (isLoggedIn && (pathname === "/auth/login" || pathname === "/auth/register")) {
