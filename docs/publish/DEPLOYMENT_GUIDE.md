@@ -12,7 +12,7 @@ When moving from local development to production, the architecture shifts from a
 | :--- | :--- | :--- |
 | **Runtime** | Bun / Node.js | Vercel Serverless (Node.js) |
 | **Database** | SQLite (`local.db`) | **PostgreSQL** (Vercel Postgres / Supabase) |
-| **File Storage** | Local Disk (`public/uploads`) | **Vercel Blob** (Recommended) |
+| **File Storage** | Local Disk (`public/uploads`) | **Vercel Blob** / **UploadThing** |
 | **WebSockets** | Integrated Socket.IO | Ably / Pusher (or custom dedicated server) |
 
 > [!IMPORTANT]
@@ -94,8 +94,10 @@ In your Vercel Project Settings, navigate to **"Environment Variables"** and add
 | `DATABASE_URL` | (Automatically added by Vercel Postgres) |
 | `AUTH_SECRET` | Run `openssl rand -base64 32` to generate a secure secret. |
 | `BASE_URL` | Your production URL (e.g., `https://my-dashboard.vercel.app`) |
-| `STORAGE_PROVIDER` | `vercel-blob` |
+| `STORAGE_PROVIDER` | `vercel-blob` or `uploadthing` |
 | `BLOB_READ_WRITE_TOKEN` | (Automatically added by Vercel Blob) |
+| `UPLOADTHING_SECRET` | (From UploadThing Dashboard) |
+| `UPLOADTHING_APP_ID` | (From UploadThing Dashboard) |
 | `NEXT_PUBLIC_APP_NAME` | `NEXT-KVC` |
 
 ---

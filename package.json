@@ -41,6 +41,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/typography": "^0.5.19",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "@uploadthing/react": "^7.3.3",
     "@vercel/blob": "^2.3.0",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.6.2",
@@ -74,6 +75,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^7.7.4",
     "zod": "^4.3.5"
   },
   "devDependencies": {

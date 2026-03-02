@@ -1,4 +1,5 @@
-import { put, del, type PutBlobResult } from "@vercel/blob";
+import { put, del as delBlob, type PutBlobResult } from "@vercel/blob";
+import { UTApi } from "uploadthing/server";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -7,6 +8,8 @@ export interface UploadResult {
   pathname: string;
   contentType?: string;
 }
+
+const utapi = new UTApi();
 
 export class StorageService {
   private static provider = (process.env.STORAGE_PROVIDER || "local").toLowerCase();
@@ -31,6 +34,24 @@ export class StorageService {
       };
     }
 
+    if (this.provider === "uploadthing") {
+      const fileToUpload = file instanceof Buffer 
+        ? new File([file], filename, { type: options.contentType }) 
+        : file;
+      
+      const response = await utapi.uploadFiles(fileToUpload);
+      
+      if (response.error) {
+        throw new Error(`UploadThing Error: ${response.error.message}`);
+      }
+
+      return {
+        url: response.data.url,
+        pathname: response.data.key,
+        contentType: options.contentType,
+      };
+    }
+
     // Local Fallback (Development)
     return this.uploadLocal(filename, file);
   }
@@ -40,7 +61,16 @@ export class StorageService {
    */
   static async delete(url: string): Promise<void> {
     if (this.provider === "vercel-blob") {
-      await del(url);
+      await delBlob(url);
+      return;
+    }
+
+    if (this.provider === "uploadthing") {
+      // For UploadThing, the "url" is usually passed, but it needs the key
+      // If we store the key in 'pathname', we should use that.
+      // But for simplicity in a unified service, we might need to extract key from URL if not provided.
+      const key = url.split("/").pop(); // Basic key extraction
+      if (key) await utapi.deleteFiles(key);
       return;
     }
 
@@ -59,7 +89,8 @@ export class StorageService {
     if (file instanceof Buffer) {
       await fs.writeFile(filePath, file);
     } else {
-      const arrayBuffer = await file.arrayBuffer();
+      const data = file as unknown as Blob;
+      const arrayBuffer = await data.arrayBuffer();
       await fs.writeFile(filePath, Buffer.from(arrayBuffer));
     }
 

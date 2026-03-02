@@ -59,8 +59,10 @@ Set to `true` if your application is sitting behind a reverse-proxy (Nginx, Clou
 
 | Variable | Default | Description |
 | :------- | :------ | :---------- |
-| `STORAGE_PROVIDER` | `local` | `local` for disk storage or `vercel-blob` for cloud storage. |
+| `STORAGE_PROVIDER` | `local` | `local`, `vercel-blob`, or `uploadthing`. |
 | `BLOB_READ_WRITE_TOKEN` | - | (Vercel Blob Only) Required token for API interaction. |
+| `UPLOADTHING_SECRET` | - | (UploadThing Only) Your private API key. |
+| `UPLOADTHING_APP_ID` | - | (UploadThing Only) Your application identifier. |
 
 ---
 
