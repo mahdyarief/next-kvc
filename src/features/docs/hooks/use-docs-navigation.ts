@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { TocSection } from "../types";
+import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 
 export function useDocsNavigation(toc: TocSection[]) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +16,23 @@ export function useDocsNavigation(toc: TocSection[]) {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
+  const tocItems = useMemo(() => {
+    return toc.flatMap(section => 
+      section.items.map(item => ({
+        label: `${section.title}: ${item.text}`,
+        value: item.id,
+        sectionId: section.id,
+        itemText: item.text,
+        sectionTitle: section.title
+      }))
+    );
+  }, [toc]);
+
+  const filteredItems = useFuzzySearch(tocItems, debouncedQuery, {
+    keys: ['label', 'itemText', 'sectionTitle'],
+    threshold: 0.4
+  });
+
   const { filteredToc, autoOpenSections } = useMemo(() => {
     if (!debouncedQuery) {
       const initial: Record<string, boolean> = {};
@@ -22,28 +40,33 @@ export function useDocsNavigation(toc: TocSection[]) {
       return { filteredToc: toc, autoOpenSections: initial };
     }
 
-    const lowerQuery = debouncedQuery.toLowerCase();
-    const filtered = toc
-      .map((section) => {
-        const titleMatches = section.title.toLowerCase().includes(lowerQuery);
-        const matchingItems = section.items.filter((item) =>
-          item.text.toLowerCase().includes(lowerQuery)
-        );
-
-        if (titleMatches || matchingItems.length > 0) {
-          return {
-            ...section,
-            items: titleMatches ? section.items : matchingItems,
-          };
+    // Map filtered items back to original structure
+    const sectionMap = new Map<string, TocSection>();
+    
+    filteredItems.forEach(item => {
+      if (!sectionMap.has(item.sectionId)) {
+        const originalSection = toc.find(s => s.id === item.sectionId);
+        if (originalSection) {
+          sectionMap.set(item.sectionId, {
+            ...originalSection,
+            items: []
+          });
         }
-        return null;
-      })
-      .filter(Boolean) as TocSection[];
+      }
+      const section = sectionMap.get(item.sectionId);
+      if (section) {
+        const originalItem = toc.find(s => s.id === item.sectionId)?.items.find(i => i.id === item.value);
+        if (originalItem) {
+          section.items.push(originalItem);
+        }
+      }
+    });
 
+    const filtered = Array.from(sectionMap.values());
     const allOpen: Record<string, boolean> = {};
     filtered.forEach((s) => (allOpen[s.id] = true));
     return { filteredToc: filtered, autoOpenSections: allOpen };
-  }, [debouncedQuery, toc]);
+  }, [debouncedQuery, toc, filteredItems]);
 
   const [manualOpenSections, setManualOpenSections] = useState<Record<string, boolean>>({});
 

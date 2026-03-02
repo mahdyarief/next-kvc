@@ -13,6 +13,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/register", request.url));
   }
 
+
   // Allow Next.js internals and favicon
   if (pathname.startsWith("/_next") || pathname === "/favicon.ico") {
     return NextResponse.next();

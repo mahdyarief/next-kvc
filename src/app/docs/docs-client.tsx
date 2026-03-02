@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import Link from "next/link";
 import { Menu, Search, FileText, LayoutDashboard, ExternalLink } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -13,6 +13,7 @@ import { SidebarItem } from "@/features/docs/components/sidebar-item";
 import { MarkdownRenderer } from "@/features/docs/components/markdown-renderer";
 import { useDocsNavigation } from "@/features/docs/hooks/use-docs-navigation";
 import { SiteFooter } from "@/components/brand/site-footer";
+import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 
 export function DocsClient({
   content,
@@ -31,6 +32,20 @@ export function DocsClient({
     scrollToSection,
   } = useDocsNavigation(toc);
 
+  const fileOptions = useMemo(() =>
+    availableFiles.map(f => ({
+      label: f.name,
+      value: f.slug,
+      ...f
+    })),
+    [availableFiles]
+  );
+
+  const filteredDocs = useFuzzySearch(fileOptions, searchQuery, {
+    keys: ['label', 'value'],
+    threshold: 0.4
+  });
+
   const renderSidebarContent = (isMobile = false) => {
     const categories = [
       { id: "reference", label: "Documentation", icon: FileText },
@@ -41,7 +56,8 @@ export function DocsClient({
     return (
       <nav className="space-y-8 pb-10">
         {categories.map((cat) => {
-          const files = availableFiles.filter((f) => f.category === cat.id);
+          const files = filteredDocs.filter((f) => f.category === cat.id);
+
           if (files.length === 0) return null;
           return (
             <div key={cat.id} className="space-y-2">
@@ -55,14 +71,19 @@ export function DocsClient({
                     key={file.slug}
                     href={`/docs?file=${file.slug}`}
                     className={cn(
-                      "block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                      "group block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all",
                       currentFileSlug === file.slug
                         ? "bg-primary/10 text-primary font-semibold ring-1 ring-primary/20"
                         : "text-muted-foreground/70 hover:bg-muted/50 hover:text-foreground"
                     )}
                     onClick={() => isMobile && setOpenMobileMenu(false)}
                   >
-                    {file.name}
+                    <div className="flex items-center justify-between">
+                      {file.name}
+                      {currentFileSlug !== file.slug && (
+                        <div className="h-1 w-1 rounded-full bg-primary/0 transition-all group-hover:bg-primary/40" />
+                      )}
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -98,9 +119,9 @@ export function DocsClient({
   };
 
   return (
-    <div className="relative mx-auto flex w-full max-w-7xl flex-1 items-start px-4 sm:px-6 lg:px-8">
+    <div className="relative mx-auto flex w-full max-w-screen-2xl flex-1 items-start px-4 sm:px-6 lg:px-8">
       {/* Sidebar (Desktop) */}
-      <aside className="sticky top-14 mt-8 hidden h-[calc(100vh-3.5rem)] w-64 overflow-y-auto border-r border-border/40 pr-6 lg:block">
+      <aside className="sticky top-14 mt-8 hidden h-[calc(100vh-3.5rem)] w-72 overflow-y-auto border-r border-border/40 pr-8 lg:block">
         <div className="relative mb-8">
           <Search className="absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground/50" />
           <input
@@ -150,8 +171,10 @@ export function DocsClient({
       </div>
 
       {/* Main Content */}
-      <main className="min-w-0 flex-1 py-8 lg:pl-10">
-        <MarkdownRenderer content={content} />
+      <main className="min-w-0 flex-1 py-12 lg:pl-16">
+        <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-outfit prose-headings:tracking-tight prose-p:text-muted-foreground/90 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground prose-code:text-primary prose-code:bg-muted/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-blockquote:my-8 prose-blockquote:border-primary/20 prose-blockquote:bg-primary/5 prose-blockquote:rounded-r-xl prose-pre:p-0 prose-pre:bg-transparent prose-pre:my-0 prose-pre:overflow-visible">
+          <MarkdownRenderer content={content} />
+        </div>
 
         <SiteFooter className="mt-24 pt-12 pb-16" maxContentWidth="max-w-none" />
       </main>

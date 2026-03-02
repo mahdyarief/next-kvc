@@ -1,52 +1,44 @@
-# 🤖 Agentic Framework (The .agent Folder)
+# 🤖 Agentic Framework: The Pre-Frontal Cortex (PFC)
 
-**NEXT-KVC** is not just a dashboard; it is an **Agentic-Ready Codebase**. It is designed to be maintained and expanded by AI agents with high precision, speed, and architectural consistency.
+**NEXT-KVC** is more than a dashboard—it is an **AI-Native Professional Factory**. It is designed to be built and maintained through **Agent-Human Collaboration**, allowing both non-tech visionaries and elite architects to deliver production-grade applications with mathematical precision.
 
-The `.agent/` directory serves as the **"Pre-Frontal Cortex"** of the project. It explicitly defines how an AI agent should think, which skills it should deploy, and which workflows it must follow to deliver production-grade code without technical debt.
-
----
-
-## � Why this Framework is Critical
-
-Implementing these principles provides measurable business and technical value:
-
-| Benefit | Description |
-| :--- | :--- |
-| **🚀 Developer Productivity** | Finding where a feature is handled takes seconds. In **FBA**, all logic is co-located. |
-| **🛡️ Extreme Reliability** | **SOLID** logic ensures changing one part is unlikely to break another. |
-| **🤖 AI-Agent Compatibility** | Prevents "spaghetti code" by providing agents with strict guardrails. |
-| **📈 Seamless Scalability** | Complexity remains manageable by encapsulating logic within isolated features. |
+The `.agent/` directory serves as the **"Pre-Frontal Cortex" (PFC)** of the project. It defines the "Planning" and "Governing" logic that guides an AI Agent to act as your lead software engineer.
 
 ---
 
-## �🏗️ The Three Pillars of Agentic Intelligence
+## 🧠 Empowering the Non-Tech Visionary
+
+This framework solves the "Technical Gap" by providing an intelligent interface between your business goals and the code:
+
+| Layer | Role in Collaboration | Benefit for Visionaries |
+| :--- | :--- | :--- |
+| **1. PFC (Strategy)** | `/plan` strategy docs in `docs/design/` | See the blueprint and architecture **before** any code is written. |
+| **2. Memory (Execution)** | Incremental `task.md` chunks | Verify progress every 15 minutes. You are always in control. |
+| **3. Ethics (Governance)** | FBA-SOLID-SSOT Audits | High-quality, professional code is guaranteed by design, not chance. |
+
+---
+
+## 🏗️ The Three Pillars of Agentic Intelligence
 
 The framework is divided into three core pillars that ensure every AI-generated line of code meets industry standards and project-specific requirements.
 
 ### 1. 📂 Rules (`.agent/rules/`)
 Rules are the **Immutable Laws** of the codebase. They act as automated guardrails that prevent architectural drift.
-
 *   **FBA-SOLID-SSOT**: Enforces Feature-Based Architecture and clean code principles.
-*   **Performance Lockdown**: Strict "Zero-JS" rule for the critical rendering path.
-*   **Client-Side Robustness**: Prevents infinite re-render loops using `useRef` based tracking.
-*   **DOM Nesting Safety**: Prevents hydration errors by enforcing W3C compliance.
-*   **UX/UI Guidelines**: Standardized typography (Outfit + Sans) and glassmorphic tokens.
+*   **Performance Lockdown**: Strict "Zero-JS" rule for the 100/100 Lighthouse score.
+*   **UI/UX Stack**: Multi-archetype design tokens (Nordic, Industrial, etc.) to avoid "AI Slop".
 
 ### 2. ⚡ Skills (`.agent/skills/`)
 Skills are **Expert Knowledge Modules**. When an agent encounters a specific domain, it "loads" these skills to perform at a senior level.
-
-*   **Vibe Blocks**: 2,000+ pre-designed components to avoid "AI Slop".
+*   **Vibe Blocks**: 2,000+ pre-designed React components.
 *   **Audit-Log Implementation**: Enterprise activity tracking with before/after diffing.
-*   **Temporal Data Management**: Algorithms for time-based records and timeline surgery.
-*   **Prisma Excellence**: Advanced patterns for modular schemas and transaction safety.
+*   **Temporal Data**: Expert algorithms for time-based records and price sync.
 
 ### 3. 🚀 Workflows (`.agent/workflows/`)
 Workflows are **Standard Operating Procedures (SOPs)**. They define the exact steps an AI takes to complete a task.
-
-*   **`/plan`**: Evaluates requests against the **HILE (High Impact, Low Effort)** strategy.
-*   **`/implement`**: A 4-stage lifecycle: Detection → Planning → Implementation → Verification.
-*   **`/diagnose`**: Systematic debugging using **5-Whys Root Cause Analysis**.
-*   **`/review`**: Automated compliance audit against FBA and SOLID standards.
+*   **`/plan` (Strategic Brain)**: Evaluates requests against the **HILE (High Impact, Low Effort)** strategy.
+*   **`/implement` (The Motor Cortex)**: A 4-stage lifecycle: Detection → Planning → Implementation → Verification.
+*   **`/diagnose` (Root Cause)**: Systematic debugging using **5-Whys Analysis**.
 
 ---
 
@@ -56,27 +48,15 @@ The core of architectural integrity lies in three interconnected principles:
 
 ### 📂 Feature-Based Architecture (FBA)
 **Rule: Group code by "Business Domain", not "File Type".**
-
 Instead of global folders, all related logic is co-located in `src/features/[feature-name]/`.
-- `components/`: UI specific to this feature.
-- `services/`: Business logic and API interaction.
-- `hooks/`: Feature-specific React logic.
-- `constants.ts`: The static configuration for the feature.
 
 ### 🧱 SOLID Principles
 **Rule: Write code that is easy to understand, extend, and maintain.**
 - **Single Responsibility**: Each function or component does **one thing**.
-- **Open/Closed**: Extend via interfaces without modifying existing core logic.
-- **Liskov Substitution**: Different implementations must be interchangeable.
-- **Interface Segregation**: Only pass the data that is actually needed.
-- **Dependency Inversion**: Depend on **abstractions**, not concretions.
-
-### 🔍 Single Source of Truth (SSOT)
-**Rule: Data and configuration must exist in exactly ONE place.**
-Redundancy causes bugs. We define options once in `constants.ts` and import them across Zod schemas, UI components, and services.
+- **Dependency Inversion**: Use hooks and services instead of direct API/DB calls.
 
 ---
 
 <div align="center">
-  **Document Status**: Reference | **Framework Version**: 1.1.0
+  **Document Status**: Reference | **Framework Version**: 1.2.0
 </div>

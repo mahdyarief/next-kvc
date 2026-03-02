@@ -205,7 +205,7 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Bento grid */}
+            {/* Features Section — Bento Grid */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {/* Large hero feature — Auth */}
               <FeatureCard
@@ -296,6 +296,193 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ── Feature: Vibe Blocks Library ──────────────── */}
+        <section className="relative py-24 overflow-hidden border-y border-border/40">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-center">
+              <div>
+                <Badge variant="outline" className="mb-6 border-amber-500/20 text-amber-600 bg-amber-500/5 px-3 py-1">
+                  Exclusive Asset
+                </Badge>
+                <h2 className="font-heading mb-6 text-4xl font-bold tracking-tight sm:text-6xl leading-[1.1]">
+                  Visual Excellence, <br />
+                  <span className="text-amber-600">Instantly.</span>
+                </h2>
+                <p className="text-muted-foreground text-xl leading-relaxed mb-8 max-w-lg">
+                  Access <strong>Vibe Blocks</strong>—a massive, proprietary library of <strong>2,000+ UI components</strong> curated from the world&apos;s best design systems.
+                </p>
+
+                <div className="grid sm:grid-cols-2 gap-8 mb-10">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 font-heading font-bold text-foreground">
+                      <div className="h-2 w-2 rounded-full bg-amber-500" />
+                      Relume Library (rl)
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      ~1,500 semantic, modular sections for landing pages, layouts, and high-conversion marketing.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 font-heading font-bold text-foreground">
+                      <div className="h-2 w-2 rounded-full bg-amber-500" />
+                      Shadcn Blocks (cn)
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      ~1,388 animation-rich, premium dashboard components powered by Aceternity and Magic UI.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <Link href="/docs/vibe-blocks">
+                    <Button variant="outline" className="h-12 px-8 font-semibold rounded-xl hover:bg-amber-500/5 hover:text-amber-600 hover:border-amber-500/20 transition-all">
+                      Browse Registry
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Decorative component cloud/stack */}
+              <div className="relative h-[480px] w-full hidden lg:block">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative w-full aspect-square max-w-[340px]">
+                    {/* Floating layers to represent "2000+ components" */}
+                    <div className="absolute top-0 left-0 w-full h-[120px] glass-raised border border-white/20 rounded-2xl shadow-2xl p-4 -rotate-6 translate-y-0 z-30">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="h-3 w-24 bg-foreground/10 rounded-full" />
+                        <div className="h-5 w-5 bg-amber-500/20 rounded-md" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-2 w-full bg-foreground/5 rounded-full" />
+                        <div className="h-2 w-3/4 bg-foreground/5 rounded-full" />
+                      </div>
+                    </div>
+                    <div className="absolute top-12 left-6 w-full h-[120px] glass-raised border border-white/20 rounded-2xl shadow-xl p-4 -rotate-2 translate-y-12 z-20">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="h-5 w-5 bg-blue-500/20 rounded-md" />
+                        <div className="h-3 w-32 bg-foreground/10 rounded-full" />
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="aspect-square bg-foreground/5 rounded-md" />
+                        <div className="aspect-square bg-foreground/5 rounded-md" />
+                        <div className="aspect-square bg-foreground/5 rounded-md" />
+                      </div>
+                    </div>
+                    <div className="absolute top-24 left-12 w-full h-[120px] glass-raised border border-white/10 rounded-2xl shadow-lg p-4 rotate-3 translate-y-24 z-10 opacity-60">
+                      <div className="h-3 w-40 bg-foreground/10 rounded-full mb-3" />
+                      <div className="h-20 w-full bg-foreground/5 rounded-xl" />
+                    </div>
+
+                    {/* Stats badge */}
+                    <div className="absolute -bottom-8 -right-8 glass-raised border border-amber-500/30 bg-amber-500/10 p-6 rounded-3xl z-40 shadow-2xl animate-bounce" style={{ animationDuration: '3s' }}>
+                      <p className="text-amber-600 font-heading text-4xl font-black mb-1">2,000+</p>
+                      <p className="text-foreground/60 text-[10px] font-bold uppercase tracking-widest leading-none">Components Indexed</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Agentic Framework Section ────────────────── */}
+        <section className="relative overflow-hidden py-32 bg-muted/20">
+          <div className="from-primary/0 via-primary/10 to-primary/0 pointer-events-none absolute inset-0 bg-gradient-to-b" />
+
+          <div className="mx-auto max-w-6xl px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-20 items-center">
+              {/* Left — Visual Content (Agentic Code) */}
+              <div className="relative order-2 lg:order-1">
+                {/* Visual Representation of Agentic Code */}
+                <div className="glass-raised overflow-hidden rounded-2xl border border-primary/20 shadow-2xl transition-all hover:scale-[1.01] hover:shadow-primary/5">
+                  <div className="border-b border-white/10 bg-white/5 p-4 flex items-center justify-between">
+                    <div className="flex gap-1.5">
+                      <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                      <div className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                      <div className="h-2.5 w-2.5 rounded-full bg-green-400" />
+                    </div>
+                    <span className="font-mono text-[10px] text-primary/60">task.md — Agent Workspace</span>
+                  </div>
+                  <div className="p-6 font-mono text-[13px] leading-relaxed select-none">
+                    <div className="flex items-center gap-3 text-emerald-400 mb-4">
+                      <span className="bg-emerald-400/20 text-emerald-400 px-1.5 py-0.5 rounded text-[10px]">DONE</span>
+                      <span>Chunk 2: Modular Implementation</span>
+                    </div>
+                    <div className="space-y-4 text-slate-400 pl-4 border-l border-white/10">
+                      <div>
+                        <span className="text-primary">✓</span> [x] FBA: Logic in <span className="text-blue-400">/src/features/</span>
+                      </div>
+                      <div>
+                        <span className="text-primary">✓</span> [x] SOLID: Single Responsibility extracted
+                      </div>
+                      <div>
+                        <span className="text-primary">✓</span> [x] Audit: Integrated <span className="text-amber-400">AuditService.log</span>
+                      </div>
+                    </div>
+                    <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-3 text-primary animate-pulse">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                      <span>Thinking: Analyzing dependency graph...</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative floating elements */}
+                <div className="absolute -top-12 -right-12 h-64 w-64 bg-primary/20 blur-[100px] -z-10" />
+                <div className="absolute -bottom-12 -left-12 h-64 w-64 bg-blue-500/20 blur-[100px] -z-10" />
+              </div>
+
+              {/* Right — Text Content */}
+              <div className="order-1 lg:order-2">
+                <Badge variant="outline" className="mb-6 border-primary/30 text-primary bg-primary/5 px-3 py-1">
+                  The Intelligent Edge
+                </Badge>
+                <h2 className="font-heading mb-6 text-4xl font-bold tracking-tight sm:text-6xl leading-[1.1]">
+                  Guided by an <br />
+                  <span className="text-primary italic">Agentic Cortex.</span>
+                </h2>
+                <p className="text-muted-foreground text-xl leading-relaxed mb-10 max-w-lg">
+                  This isn&apos;t just a codebase—it&apos;s an <strong>AI-Native Professional Factory</strong>. Our Pre-Frontal Cortex guides you from concept to production-grade implementation.
+                </p>
+
+                <div className="grid gap-8 mb-12">
+                  <IntelligenceItem
+                    icon={<Sparkles className="h-5 w-5" />}
+                    title="Strategic Planning (The PFC)"
+                    description="AI-generated design docs in /docs/design/ ensure your vision is architected before a single line is written."
+                  />
+                  <IntelligenceItem
+                    icon={<Zap className="h-5 w-5" />}
+                    title="Incremental Execution"
+                    description="Dynamic task-splitting in task.md breaks your goals into 15-minute, testable implementation chunks."
+                  />
+                  <IntelligenceItem
+                    icon={<Shield className="h-5 w-5" />}
+                    title="Governance & Safety"
+                    description="Automated FBA-SOLID-SSOT audits are baked into every byte. Code that grows with you, not against you."
+                  />
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <Link href="/docs/agent-onboarding">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground group h-12 rounded-xl px-8 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]"
+                    >
+                      <Sparkles className="mr-2 h-4 w-4 animate-pulse text-amber-300" />
+                      Start Agent Onboarding
+                    </Button>
+                  </Link>
+                  <Link href="/docs">
+                    <Button variant="ghost" className="h-12 px-6 font-semibold">
+                      Read Documentation
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <SiteFooter />
@@ -304,6 +491,32 @@ export default function Home() {
 }
 
 /* ── Internal components ─────────────────────────────── */
+
+function IntelligenceItem({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex gap-4 group">
+      <div className="bg-primary/10 text-primary border border-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        {icon}
+      </div>
+      <div>
+        <h4 className="font-heading text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
+          {title}
+        </h4>
+        <p className="text-muted-foreground text-sm leading-relaxed">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function TechCard({ version }: { version: string }) {
   const stack = [

@@ -49,5 +49,3 @@ prisma/*.db-journal
 prisma/*.sqlite
 prisma/migrations/*
 !prisma/migrations/.gitkeep
-
-.agent

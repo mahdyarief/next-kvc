@@ -20,6 +20,7 @@
     "db:studio": "bunx prisma studio",
     "typecheck": "tsc --noEmit",
     "add-admin": "node --import tsx scripts/setup-admin.ts",
+    "deploy:env": "node --import tsx scripts/push-vercel-env.ts",
     "format": "bun run prettier --write ."
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
+    "fuse.js": "^7.1.0",
     "lucide-react": "^0.562.0",
     "mariadb": "^3.5.1",
     "mermaid": "^11.12.3",

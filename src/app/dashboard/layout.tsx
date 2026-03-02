@@ -10,7 +10,7 @@ import pkg from "../../../package.json";
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
   const systemConfig = await prisma.systemConfig.findUnique({ where: { id: "default" } });
-  const appName = systemConfig?.appName || "NextStarter";
+  const appName = systemConfig?.appName || "NextKVC";
 
   return (
     <SidebarProvider>

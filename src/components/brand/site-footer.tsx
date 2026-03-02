@@ -54,7 +54,7 @@ export function SiteFooter({ className, maxContentWidth = "max-w-6xl" }: SiteFoo
                             <Github className="h-4 w-4" />
                         </Link>
                         <span className="text-muted-foreground text-xs">
-                            © {new Date().getFullYear()} NextStarter
+                            © {new Date().getFullYear()} NextKVC
                         </span>
                     </div>
                 </div>

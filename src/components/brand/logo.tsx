@@ -40,7 +40,7 @@ export function Logo({ className = "", size = 32, showText = false }: LogoProps)
       {showText && (
         <div className="flex flex-col leading-none">
           <span className="font-heading text-foreground font-semibold tracking-tight" style={{ fontSize: size * 0.42 }}>
-            NextStarter
+            NextKVC
           </span>
           <span className="text-muted-foreground font-mono tracking-widest uppercase" style={{ fontSize: size * 0.22 }}>
             Dashboard

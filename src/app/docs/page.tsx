@@ -5,7 +5,7 @@ import { DocsClient } from "./docs-client";
 import { Logo } from "@/components/brand/logo";
 
 export const metadata = {
-  title: "Documentation — NextStarter",
+  title: "Documentation — NextKVC",
   description: "Advanced Next.js + Prisma Dashboard Starter Documentation",
 };
 
@@ -19,6 +19,8 @@ export default async function PublicDocsPage({
   const resolvedParams = await searchParams;
   const DOC_ORDER = [
     "README.md",
+    "VIBE_BLOCKS_REGISTRY.md",
+    "AGENT_ONBOARDING.md",
     "ENVIRONMENT_VARIABLES.md",
     "ROADMAP.md",
     "PROJECT_DOCUMENTATION.md",
@@ -48,6 +50,8 @@ export default async function PublicDocsPage({
 
       const nameMap: Record<string, { name: string; category: "reference" | "guide" | "info" }> = {
         README: { name: "Introduction", category: "reference" },
+        "VIBE BLOCKS REGISTRY": { name: "Vibe Blocks Registry", category: "reference" },
+        "AGENT ONBOARDING": { name: "Agent Onboarding", category: "guide" },
         "ENVIRONMENT VARIABLES": { name: "Environment Variables", category: "reference" },
         "PROJECT DOCUMENTATION": { name: "Project Architecture", category: "reference" },
         "AGENTIC FRAMEWORK": { name: "Agentic Framework", category: "reference" },

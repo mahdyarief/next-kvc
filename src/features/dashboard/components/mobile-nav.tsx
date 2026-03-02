@@ -58,7 +58,7 @@ const navGroups: NavGroup[] = [
   },
 ];
 
-export function MobileNav({ appName = "NextStarter" }: { appName?: string }) {
+export function MobileNav({ appName = "NextKVC" }: { appName?: string }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { data: session } = useSession();
