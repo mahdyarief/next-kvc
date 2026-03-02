@@ -1,0 +1,83 @@
+model AuditLog {
+  id         String   @id @default(cuid())
+  entityName String // e.g. "User", "Notification"
+  entityId   String
+  action     String // "CREATE", "UPDATE", "DELETE", "LOGIN"
+  actorId    String?
+  actorLabel String? // Denormalized email or name for history
+  diff       String? // JSON stringified diff: { field: [old, new] }
+  metadata   String? // JSON stringified extra context
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([entityName, entityId])
+  @@index([actorId])
+  @@index([createdAt])
+}
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+  output     = "../../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// Global Types (if any)
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("INFO")
+  read      Boolean  @default(false)
+  href      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SystemConfig {
+  id                 String   @id @default("default")
+  appName            String   @default("NEXT-STARTER")
+  logoUrl            String?
+  faviconUrl         String?
+  timezone           String   @default("Asia/Jakarta")
+  enableRegistration Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  role      String   @default("OWNER")
+  apiKey    String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  webhooks      Webhook[]
+  notifications Notification[]
+}
+
+model Webhook {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  url       String
+  secret    String?
+  events    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

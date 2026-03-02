@@ -1,0 +1,17 @@
+model AuditLog {
+  id             String   @id @default(cuid())
+  entityName     String   // e.g. "User", "Notification"
+  entityId       String
+  action         String   // "CREATE", "UPDATE", "DELETE", "LOGIN"
+  actorId        String?
+  actorLabel     String?  // Denormalized email or name for history
+  diff           String?  // JSON stringified diff: { field: [old, new] }
+  metadata       String?  // JSON stringified extra context
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+
+  @@index([entityName, entityId])
+  @@index([actorId])
+  @@index([createdAt])
+}

@@ -1,0 +1,11 @@
+[install]
+# use the faster bun lockfile
+lockfile = true
+
+[run]
+# allow bun to run scripts from workspace
+# workspaces = true
+
+[test]
+# test runner configuration
+# root = "."
