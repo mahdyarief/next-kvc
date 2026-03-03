@@ -416,29 +416,36 @@ export default function AgentOnboardingPage() {
             </Dialog>
 
             <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
-                <DialogContent className="max-w-[95vw] w-fit border-none bg-transparent p-0 shadow-none outline-none">
+                <DialogContent className="max-w-screen sm:max-w-[98vw] w-screen h-[95vh] border-none bg-black/20 p-0 shadow-none outline-none backdrop-blur-xl">
                     <DialogHeader className="sr-only">
                         <DialogTitle>Framework Phase Full View</DialogTitle>
                         <DialogDescription>Full screen preview of the framework phase image.</DialogDescription>
                     </DialogHeader>
-                    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl h-[85vh] aspect-video max-w-full mx-auto bg-black/5">
+                    <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-10 group/lightbox">
                         {selectedImage && (
-                            <Image
-                                src={selectedImage}
-                                alt="Framework Phase Full View"
-                                fill
-                                className="object-contain rounded-[2rem] shadow-2xl"
-                                priority
-                            />
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src={selectedImage}
+                                    alt="Framework Phase Full View"
+                                    fill
+                                    className="object-contain drop-shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+                                    priority
+                                />
+                            </div>
                         )}
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="absolute top-4 right-4 bg-black/50 text-white rounded-full hover:bg-black/70 border border-white/10"
+                            className="absolute top-4 right-4 sm:top-8 sm:right-8 h-12 w-12 bg-black/40 text-white rounded-full hover:bg-black/80 border border-white/10 z-50 backdrop-blur-lg transition-transform hover:scale-110 active:scale-95"
                             onClick={() => setSelectedImage(null)}
                         >
-                            <ArrowRight className="h-5 w-5 rotate-45" />
+                            <ArrowRight className="h-6 w-6 rotate-45" />
                         </Button>
+
+                        {/* Hint to click outside to close */}
+                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/40 text-[10px] uppercase tracking-widest font-medium pointer-events-none opacity-0 group-hover/lightbox:opacity-100 transition-opacity">
+                            Click outside to close
+                        </div>
                     </div>
                 </DialogContent>
             </Dialog>

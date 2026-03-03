@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user) {
-    redirect("/login");
+    redirect("/sign-in");
   }
 
   const userCount = await prisma.user.count();

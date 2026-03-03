@@ -156,7 +156,7 @@ export function MobileNav({ appName = "NextKVC" }: { appName?: string }) {
             className="flex h-9 w-full items-center justify-center gap-2 rounded-xl border-border/40 bg-background/50 text-xs font-semibold shadow-sm transition-all hover:bg-accent"
             onClick={async () => {
               setOpen(false);
-              await signOut({ callbackUrl: "/auth/login" });
+              await signOut({ callbackUrl: "/auth/sign-in" });
             }}
           >
             <LogOut size={14} /> Sign Out

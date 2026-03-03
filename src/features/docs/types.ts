@@ -21,4 +21,5 @@ export interface DocsClientProps {
   toc: TocSection[];
   availableFiles: DocFile[];
   currentFileSlug: string;
+  version?: string;
 }

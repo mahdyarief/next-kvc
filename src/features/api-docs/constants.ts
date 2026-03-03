@@ -5,7 +5,7 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
   {
     category: "Authentication",
     method: "POST",
-    path: "/api/auth/register",
+    path: "/api/auth/sign-up",
     description: "Register a new user account",
     params: "Body: { name, email, password }",
     auth: "PUBLIC",

@@ -134,6 +134,16 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.LoginAttemptScalarFieldEnum = {
+  id: 'id',
+  ipAddress: 'ipAddress',
+  email: 'email',
+  count: 'count',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -152,6 +162,7 @@ exports.Prisma.SystemConfigScalarFieldEnum = {
   faviconUrl: 'faviconUrl',
   timezone: 'timezone',
   enableRegistration: 'enableRegistration',
+  enableGoogleAuth: 'enableGoogleAuth',
   updatedAt: 'updatedAt'
 };
 
@@ -161,10 +172,27 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
+  status: 'status',
+  recoveryCodes: 'recoveryCodes',
   image: 'image',
   apiKey: 'apiKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
 };
 
 exports.Prisma.WebhookScalarFieldEnum = {
@@ -197,9 +225,11 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   AuditLog: 'AuditLog',
+  LoginAttempt: 'LoginAttempt',
   Notification: 'Notification',
   SystemConfig: 'SystemConfig',
   User: 'User',
+  Account: 'Account',
   Webhook: 'Webhook'
 };
 

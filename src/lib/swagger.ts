@@ -117,7 +117,7 @@ All endpoints require authentication via:
         },
       },
       paths: {
-        "/auth/register": {
+        "/auth/sign-up": {
           post: {
             tags: ["Authentication"],
             summary: "Register a new user",

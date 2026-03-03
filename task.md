@@ -1,14 +1,14 @@
-# Task: Review & Fix Auth Theme Color Contrast
+# Task: Mobile-Friendly Documentation Enhancement
 
-Review color usage on dark theme for sign-in and register pages.
+## 📋 Progress Tracking
+- [ ] **Chunk 1: Refactor `DocsClient`** - READY TO IMPLEMENT
+  - [ ] Add `version` to `DocsClientProps`.
+  - [ ] Consolidate mobile headers inside `DocsClient`.
+  - [ ] Add secondary navigation links to the mobile `Sheet`.
+  - [ ] Improve main content padding on mobile.
+  - **Test Instructions**: Check mobile view (375px) to ensure only ONE sticky header is present and the menu drawer works.
 
-- [x] **Chunk 1: Login Page Color Contrast Fix** - COMPLETED
-  - [x] Replace `bg-foreground` with a fixed obsidian dark color on the left panel.
-  - [x] Wrap the left branding panel's content in a way that respects the dark theme.
-  - [x] Adjust the OKLCH gradient for the left panel mesh.
-  - **Test Instructions**: Check login page in both light and dark modes. Ensure left panel remains dark and text inside is white.
-- [x] **Chunk 2: Register Page Color Contrast Fix** - COMPLETED
-  - [x] Apply the same panel fix to the registration page.
-  - [x] Audit the success state for dark mode (it currently uses `bg-mesh-gold`).
-  - [x] Ensure mobile logo has proper contrast against the gold background on mobile.
-  - **Test Instructions**: Check register page in both modes. Fill out form and check account creation success screen.
+- [ ] **Chunk 2: Update Doc Slug Page (`[[...slug]]/page.tsx`)** - WAITING FOR CHUNK 1
+  - [ ] Remove the duplicated `<header>` from the server component.
+  - [ ] Pass the version and other necessary props to `DocsClient`.
+  - **Test Instructions**: Check if the mobile and desktop documentation pages look and feel cleaner.

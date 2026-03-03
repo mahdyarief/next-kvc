@@ -53,8 +53,8 @@ async function pushEnv() {
       // We use a temporary command to handle this
       const cleanValue = value.replace(/"/g, '\\"'); // Escape quotes for the shell
       execSync(`echo "${cleanValue}" | vercel env add ${key} ${DEFAULT_ENV}`, { stdio: 'inherit' });
-    } catch (err: any) {
-      console.error(`   ❌ Failed to add ${key}: ${err.message}`);
+    } catch (err: unknown) {
+      console.error(`   ❌ Failed to add ${key}: ${(err as Error).message}`);
     }
   }
 

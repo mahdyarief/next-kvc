@@ -6,11 +6,19 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. Resolve convenience routes
+  if (pathname === "/sign-in") {
+    return NextResponse.redirect(new URL("/auth/sign-in", request.url));
+  }
+  if (pathname === "/sign-up") {
+    return NextResponse.redirect(new URL("/auth/sign-up", request.url));
+  }
+
+  // Backward compatibility redirects (optional but good)
   if (pathname === "/login") {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL("/auth/sign-in", request.url));
   }
   if (pathname === "/register") {
-    return NextResponse.redirect(new URL("/auth/register", request.url));
+    return NextResponse.redirect(new URL("/auth/sign-up", request.url));
   }
 
 
@@ -41,7 +49,7 @@ export async function proxy(request: NextRequest) {
     }
 
     return NextResponse.redirect(
-      new URL(`/auth/login?callbackUrl=${encodeURIComponent(from)}`, request.url)
+      new URL(`/auth/sign-in?callbackUrl=${encodeURIComponent(from)}`, request.url)
     );
   }
 
@@ -51,7 +59,7 @@ export async function proxy(request: NextRequest) {
   // }
 
   // Redirect logged-in users away from auth pages (optional but standard)
-  if (isLoggedIn && (pathname === "/auth/login" || pathname === "/auth/register")) {
+  if (isLoggedIn && (pathname === "/auth/sign-in" || pathname === "/auth/sign-up")) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 

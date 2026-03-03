@@ -2,7 +2,7 @@ import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
   pages: {
-    signIn: "/auth/login",
+    signIn: "/auth/sign-in",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
@@ -17,8 +17,8 @@ export const authConfig = {
           // }
           return true;
         }
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn && nextUrl.pathname === "/auth/login") {
+        return false; // Redirect unauthenticated users to sign-in page
+      } else if (isLoggedIn && nextUrl.pathname === "/auth/sign-in") {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }
       return true;

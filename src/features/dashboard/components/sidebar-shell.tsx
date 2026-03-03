@@ -53,7 +53,7 @@ export function SidebarShell({ userName, userEmail, version }: SidebarShellProps
               {userName?.charAt(0)?.toUpperCase() ?? "U"}
             </div>
             <button
-              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+              onClick={() => signOut({ callbackUrl: "/auth/sign-in" })}
               className="text-muted-foreground hover:text-destructive flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
               title="Sign Out"
             >
@@ -76,7 +76,7 @@ export function SidebarShell({ userName, userEmail, version }: SidebarShellProps
                 </p>
               </div>
               <button
-                onClick={() => signOut({ callbackUrl: "/auth/login" })}
+                onClick={() => signOut({ callbackUrl: "/auth/sign-in" })}
                 className="text-muted-foreground hover:text-destructive ml-auto flex-shrink-0 rounded-md p-1.5 transition-colors"
                 title="Sign Out"
               >

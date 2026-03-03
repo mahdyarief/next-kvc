@@ -8,7 +8,7 @@ import { ApiKeyManager } from "@/features/profile/components/api-key-manager";
 
 export default async function UserProfilePage() {
     const session = await auth();
-    if (!session?.user?.id) redirect("/auth/login");
+    if (!session?.user?.id) redirect("/auth/sign-in");
 
     const profile = await ProfileService.getProfile(session.user.id);
     if (!profile) redirect("/dashboard");

@@ -16,6 +16,18 @@ model AuditLog {
   @@index([createdAt])
 }
 
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  ipAddress String
+  email     String?
+  count     Int      @default(1)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ipAddress])
+}
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -51,22 +63,45 @@ model SystemConfig {
   faviconUrl         String?
   timezone           String   @default("Asia/Jakarta")
   enableRegistration Boolean  @default(true)
+  enableGoogleAuth   Boolean  @default(true)
   updatedAt          DateTime @updatedAt
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String   @unique
-  password  String
-  role      String   @default("CUSTOMER")
-  image     String?
-  apiKey    String?  @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  name          String?
+  email         String   @unique
+  password      String?
+  role          String   @default("CUSTOMER")
+  status        String   @default("PENDING")
+  recoveryCodes String[] @default([])
+  image         String?
+  apiKey        String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   webhooks      Webhook[]
   notifications Notification[]
+  accounts      Account[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
 model Webhook {

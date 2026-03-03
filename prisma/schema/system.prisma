@@ -5,5 +5,6 @@ model SystemConfig {
   faviconUrl         String?
   timezone           String   @default("Asia/Jakarta")
   enableRegistration Boolean  @default(true)
+  enableGoogleAuth   Boolean  @default(true)
   updatedAt          DateTime @updatedAt
 }

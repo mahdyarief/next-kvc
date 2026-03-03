@@ -1,5 +1,4 @@
 import "dotenv/config";
-import path from "node:path";
 import { defineConfig } from "prisma/config";
 
 // Resolve the DATABASE_URL at config time.
